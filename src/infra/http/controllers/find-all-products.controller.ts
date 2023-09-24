@@ -3,7 +3,7 @@ import { FindAllProductsUseCase } from '@domain/menu/application/use-cases/find-
 import { ProductPresenter } from '../presenters/product.presenter';
 
 @Controller('products')
-export class ProductsController {
+export class FindAllProductsController {
   constructor(
     private readonly findAllProductsUseCase: FindAllProductsUseCase,
   ) {}

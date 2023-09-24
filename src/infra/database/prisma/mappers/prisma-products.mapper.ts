@@ -11,4 +11,17 @@ export class PrismaProductsMapper {
       UniqueEntityId.createFromRawId(raw.id),
     );
   }
+  static toPrisma(product: Product) {
+    return {
+      name: product.name,
+      description: product.description,
+      has3dModel: product.has3dModel,
+      unityModelId: product.unityModelId,
+      imageUrl: '',
+      price: product.price,
+      ingredients: product.ingredients,
+      nutritionFacts: product.nutritionFacts,
+      id: product.id.toString(),
+    };
+  }
 }

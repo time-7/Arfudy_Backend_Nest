@@ -8,18 +8,25 @@ import { Injectable } from '@nestjs/common';
 export class PrismaProductsRepository implements ProductsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(product: Product): Promise<Product> {
-    throw new Error('Method not implemented.');
+  async create(product: Product): Promise<Product> {
+    const data = PrismaProductsMapper.toPrisma(product);
+    const newProduct = await this.prisma.product.create({ data });
+    return PrismaProductsMapper.toDomain(newProduct);
   }
   async findMany(): Promise<Product[]> {
     const products = await this.prisma.product.findMany();
 
     return products.map(PrismaProductsMapper.toDomain);
   }
-  findById(id: string): Promise<Product> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Product> {
+    const product = await this.prisma.product.findFirst({
+      where: { id },
+    });
+    return PrismaProductsMapper.toDomain(product);
   }
-  delete(product: Product): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(product: Product): Promise<void> {
+    await this.prisma.product.delete({
+      where: { id: product.id.toString() },
+    });
   }
 }

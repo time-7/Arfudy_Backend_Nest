@@ -4,7 +4,7 @@ import { Ingredient } from '../../enterprise/entities/value-objects/ingredients.
 import { NutritionFacts } from '../../enterprise/entities/value-objects/nutrition-facts.value-object';
 import { ProductsRepository } from '../repositories/products.repository';
 
-interface CreateProductUseCaseRequest {
+export interface CreateProductUseCaseRequest {
   name: string;
   description: string;
   ingredients: Ingredient[];
