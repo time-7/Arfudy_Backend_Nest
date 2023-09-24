@@ -17,6 +17,10 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "types": [
+      "vitest/globals",
+      "multer"
+    ],
     "paths": {
       "@core/*": [
         "src/core/*"
@@ -27,10 +31,6 @@
       "@domain/*": [
         "src/domain/*"
       ]
-    },
-    "types": [
-      "vitest/globals",
-      "multer"
-    ]
+    }
   }
 }
