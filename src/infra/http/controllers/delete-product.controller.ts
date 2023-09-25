@@ -1,9 +1,4 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
-import { ProductPresenter } from '../presenters/product.presenter';
-import {
-  CreateProductUseCase,
-  CreateProductUseCaseRequest,
-} from '@domain/menu/application/use-cases/create-product.use-case';
+import { Controller, Delete, Param } from '@nestjs/common';
 import { DeleteProductUseCase } from '@domain/menu/application/use-cases/delete-product.use-case';
 
 @Controller('products')
