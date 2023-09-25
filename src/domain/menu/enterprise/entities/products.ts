@@ -1,7 +1,7 @@
 import { Entity } from '@core/entities/entity';
 import { NutritionFacts } from './value-objects/nutrition-facts.value-object';
 import { Ingredient } from './value-objects/ingredients.value-object';
-import { UniqueEntityId } from '../../../../core/entities/unique-entity-id';
+import { UniqueEntityId } from '@core/entities/unique-entity-id';
 
 export interface ProductProps {
   name: string;
@@ -65,11 +65,15 @@ export class Product extends Entity<ProductProps> {
         name,
         description,
         has3dModel: has3dModel ? has3dModel : false,
-        imageUrl: imageUrl ? imageUrl : undefined,
+        imageUrl: imageUrl ?? null,
         ingredients,
         nutritionFacts: ingredients.length
           ? NutritionFacts.createFromIngredients(ingredients)
-          : nutritionFacts,
+          : NutritionFacts.create({
+              carbohydrate: nutritionFacts.carbohydrate,
+              protein: nutritionFacts.protein,
+              totalFat: nutritionFacts.totalFat,
+            }),
         price,
         unityModelId,
       },
