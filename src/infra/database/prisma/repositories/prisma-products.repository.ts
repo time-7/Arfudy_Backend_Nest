@@ -11,6 +11,7 @@ export class PrismaProductsRepository implements ProductsRepository {
   async create(product: Product): Promise<Product> {
     const data = PrismaProductsMapper.toPrisma(product);
     const newProduct = await this.prisma.product.create({ data });
+
     return PrismaProductsMapper.toDomain(newProduct);
   }
   async findMany(): Promise<Product[]> {
@@ -22,6 +23,8 @@ export class PrismaProductsRepository implements ProductsRepository {
     const product = await this.prisma.product.findFirst({
       where: { id },
     });
+    if (!product) return null;
+
     return PrismaProductsMapper.toDomain(product);
   }
   async delete(product: Product): Promise<void> {

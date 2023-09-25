@@ -17,7 +17,7 @@ export class PrismaProductsMapper {
       description: product.description,
       has3dModel: product.has3dModel,
       unityModelId: product.unityModelId,
-      imageUrl: '',
+      imageUrl: product.imageUrl,
       price: product.price,
       ingredients: product.ingredients,
       nutritionFacts: product.nutritionFacts,

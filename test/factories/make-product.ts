@@ -1,10 +1,10 @@
 import {
   Product,
   ProductProps,
-} from 'src/domain/menu/enterprise/entities/products';
+} from '@domain/menu/enterprise/entities/products';
 import { faker } from '@faker-js/faker';
-import { NutritionFacts } from '../../src/domain/menu/enterprise/entities/value-objects/nutrition-facts.value-object';
-import { UniqueEntityId } from '../../src/core/entities/unique-entity-id';
+import { NutritionFacts } from '@domain/menu/enterprise/entities/value-objects/nutrition-facts.value-object';
+import { UniqueEntityId } from '@core/entities/unique-entity-id';
 
 export function makeProductWithoutIngredients(
   override: Partial<ProductProps> = {},
@@ -17,12 +17,13 @@ export function makeProductWithoutIngredients(
       has3dModel: false,
       imageUrl: faker.lorem.words(),
       ingredients: [],
-      nutritionFacts: override.nutritionFacts ?? {
-        carbohydrate: 2,
-        protein: 2,
-        totalCalories: 2,
-        totalFat: 2,
-      },
+      nutritionFacts:
+        override.nutritionFacts ??
+        ({
+          carbohydrate: 2,
+          protein: 2,
+          totalFat: 2,
+        } as NutritionFacts),
       price: faker.number.float(),
       unityModelId: faker.lorem.word(),
     },
