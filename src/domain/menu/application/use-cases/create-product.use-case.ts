@@ -1,23 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Product } from '../../enterprise/entities/products';
-import { Ingredient } from '../../enterprise/entities/value-objects/ingredients.value-object';
-import { NutritionFacts } from '../../enterprise/entities/value-objects/nutrition-facts.value-object';
 import { ProductsRepository } from '../repositories/products.repository';
+import { CreateProductRequestDto } from '@infra/http/dtos/create-product.request.dto';
+import { CreatedResponse } from '@core/responses/responses/created.response';
+import { ProductPresenter } from '@infra/http/presenters/product.presenter';
 
-export interface CreateProductUseCaseRequest {
-  name: string;
-  description: string;
-  ingredients: Ingredient[];
-  nutritionFacts?: NutritionFacts;
-  has3dModel: boolean;
-  imageUrl: string;
-  price: number;
-  unityModelId: string;
-}
+export interface CreateProductUseCaseRequest extends CreateProductRequestDto {}
 
-interface CreateProductUseCaseResponse {
-  product: Product;
-}
+interface CreateProductUseCaseResponse
+  extends CreatedResponse<ProductPresenter, 'id'> {}
 
 @Injectable()
 export class CreateProductUseCase {
@@ -46,6 +37,9 @@ export class CreateProductUseCase {
 
     product = await this.productsRepository.create(product);
 
-    return { product };
+    return {
+      data: { id: product.id.toString() },
+      message: 'Produto criado com sucesso!',
+    };
   }
 }

@@ -5,6 +5,9 @@ import {
 import { faker } from '@faker-js/faker';
 import { NutritionFacts } from '@domain/menu/enterprise/entities/value-objects/nutrition-facts.value-object';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../../src/infra/database/prisma/prisma.service';
+import { PrismaProductsMapper } from '../../src/infra/database/prisma/mappers/prisma-products.mapper';
 
 export function makeProductWithoutIngredients(
   override: Partial<ProductProps> = {},
@@ -69,4 +72,21 @@ export function makeProductWithIngredients(
     },
     id ?? UniqueEntityId.create(),
   );
+}
+
+@Injectable()
+export class ProductFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaProductWithIngredients(
+    data: Partial<ProductProps> = {},
+  ): Promise<Product> {
+    const product = makeProductWithIngredients(data);
+
+    await this.prisma.product.create({
+      data: PrismaProductsMapper.toPrisma(product),
+    });
+
+    return product;
+  }
 }

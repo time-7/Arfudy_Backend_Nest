@@ -7,6 +7,8 @@ import { DeleteProductUseCase } from '@domain/menu/application/use-cases/delete-
 import { DeleteProductsController } from './controllers/delete-product.controller';
 import { FindProductByIdUseCase } from '@domain/menu/application/use-cases/find-product-by-id.use-case';
 import { FindProductsByIdController } from './controllers/find-product-by-id.controller';
+import { EditProductController } from './controllers/edit-product.controller';
+import { EditProductUseCase } from '@domain/menu/application/use-cases/edit-product.use-case';
 
 @Module({
   imports: [],
@@ -15,12 +17,14 @@ import { FindProductsByIdController } from './controllers/find-product-by-id.con
     CreateProductsController,
     DeleteProductsController,
     FindProductsByIdController,
+    EditProductController,
   ],
   providers: [
     FindAllProductsUseCase,
     CreateProductUseCase,
     DeleteProductUseCase,
     FindProductByIdUseCase,
+    EditProductUseCase,
   ],
 })
 export class HttpModule {}

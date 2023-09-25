@@ -1,11 +1,11 @@
 import {
   makeProductWithIngredients,
   makeProductWithoutIngredients,
-} from 'src/../test/factories/make-product';
-import { InMemoryProductsRepository } from 'src/../test/repositories/in-memory-products.repository';
+} from '@test/factories/make-product';
+import { InMemoryProductsRepository } from '@test/repositories/in-memory-products.repository';
 import { DeleteProductUseCase } from './delete-product.use-case';
 import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
-import { UniqueEntityId } from '../../../../core/entities/unique-entity-id';
+import { UniqueEntityId } from '@core/entities/unique-entity-id';
 
 describe('Delete Product', async () => {
   let inMemoryProductsRepository: InMemoryProductsRepository;
