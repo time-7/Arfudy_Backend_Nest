@@ -14,11 +14,22 @@ export class PrismaProductsRepository implements ProductsRepository {
 
     return PrismaProductsMapper.toDomain(newProduct);
   }
+
+  async save(product: Product): Promise<void> {
+    const data = PrismaProductsMapper.toPrismaUpdate(product);
+
+    await this.prisma.product.update({
+      where: { id: product.id.toString() },
+      data,
+    });
+  }
+
   async findMany(): Promise<Product[]> {
     const products = await this.prisma.product.findMany();
 
     return products.map(PrismaProductsMapper.toDomain);
   }
+
   async findById(id: string): Promise<Product> {
     const product = await this.prisma.product.findFirst({
       where: { id },
@@ -27,6 +38,7 @@ export class PrismaProductsRepository implements ProductsRepository {
 
     return PrismaProductsMapper.toDomain(product);
   }
+
   async delete(product: Product): Promise<void> {
     await this.prisma.product.delete({
       where: { id: product.id.toString() },
