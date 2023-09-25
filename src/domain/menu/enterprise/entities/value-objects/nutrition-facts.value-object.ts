@@ -31,15 +31,15 @@ export class NutritionFacts implements nutritionFacts {
 
   static createFromIngredients(ingredients: Ingredient[]) {
     const ingredientsCarbs = ingredients.map((ingredient) => {
-      return ingredient.nutritionFacts.carbohydrate;
+      return ingredient.nutritionFacts.carbohydrate * ingredient.quantity;
     });
 
     const ingredientsProteins = ingredients.map((ingredient) => {
-      return ingredient.nutritionFacts.protein;
+      return ingredient.nutritionFacts.protein * ingredient.quantity;
     });
 
     const ingredientsTotalFats = ingredients.map((ingredient) => {
-      return ingredient.nutritionFacts.totalFat;
+      return ingredient.nutritionFacts.totalFat * ingredient.quantity;
     });
 
     const ingredientsTotalCalories = ingredients.map((ingredient) => {
@@ -47,7 +47,7 @@ export class NutritionFacts implements nutritionFacts {
         ...ingredient.nutritionFacts,
       });
 
-      return ingredient.nutritionFacts.totalCalories;
+      return ingredient.nutritionFacts.totalCalories * ingredient.quantity;
     });
 
     const carbohydrate = sumArray(ingredientsCarbs);
