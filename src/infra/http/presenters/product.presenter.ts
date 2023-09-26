@@ -5,6 +5,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Optional } from '@prisma/client/runtime/library';
 import { NutritionFactsPresenter } from './nutrition-facts.presenter';
+import { IngredientPresenter } from './ingredient.presenter';
 
 export class ProductPresenter {
   @ApiProperty()
@@ -17,8 +18,8 @@ export class ProductPresenter {
   price: number;
   @ApiProperty()
   has3dModel: boolean;
-  @ApiProperty()
-  ingredients;
+  @ApiProperty({ type: () => IngredientPresenter, isArray: true })
+  ingredients: IngredientPresenter[];
   @ApiProperty({ type: () => NutritionFactsPresenter })
   nutritionFacts: NutritionFactsPresenter;
   @ApiProperty()
@@ -55,7 +56,7 @@ export class ProductPresenter {
       {
         name: product.name,
         description: product.description,
-        ingredients: product.ingredients,
+        ingredients: product.ingredients.map(IngredientPresenter.toHttp),
         nutritionFacts: NutritionFactsPresenter.toHttp(product.nutritionFacts),
         price: product.price,
         has3dModel: product.has3dModel,

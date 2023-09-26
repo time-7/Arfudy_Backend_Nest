@@ -3,22 +3,22 @@ import { PrismaClient } from '@prisma/client';
 
 config({ path: '.env', override: true });
 
-const prisma = new PrismaClient();
-
 function getDatabaseUrlForTesting() {
   if (!(process.env.DATABASE_URL && process.env.DATABASE_TEST_URL)) {
-    throw new Error('Please provider a DATABASE_URL environment variable');
+    throw new Error(
+      'Please provider a DATABASE_URL and DATABASE_TEST_URL environment variable',
+    );
   }
 
-  const url = process.env.DATABASE_TEST_URL;
-
-  return url.toString();
+  return process.env.DATABASE_TEST_URL;
 }
 
 beforeAll(async () => {
-  const databaseURL = getDatabaseUrlForTesting();
+  process.env.DATABASE_URL = getDatabaseUrlForTesting();
+});
 
-  process.env.DATABASE_URL = databaseURL;
+const prisma = new PrismaClient({
+  datasourceUrl: process.env.DATABASE_TEST_URL,
 });
 
 afterAll(async () => {
