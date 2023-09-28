@@ -1,7 +1,46 @@
-import { Ingredient } from '@domain/menu/enterprise/entities/value-objects/ingredients.value-object';
-import { NutritionFacts } from '@domain/menu/enterprise/entities/value-objects/nutrition-facts.value-object';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+
+class NutritionFactsDto {
+  @IsInt()
+  @ApiProperty()
+  carbohydrate: number;
+
+  @IsInt()
+  @ApiProperty()
+  protein: number;
+
+  @IsInt()
+  @ApiProperty()
+  totalFat: number;
+
+  @IsOptional()
+  @ApiPropertyOptional()
+  totalCalories: number;
+}
+
+class IngredientDto {
+  @IsString()
+  @ApiProperty()
+  name: string;
+
+  @IsNumber()
+  @ApiProperty()
+  quantity: number;
+
+  @ValidateNested()
+  @Type(() => NutritionFactsDto)
+  @ApiProperty({ type: () => NutritionFactsDto })
+  nutritionFacts: NutritionFactsDto;
+}
 
 export class CreateProductRequestDto {
   @IsString()
@@ -12,11 +51,17 @@ export class CreateProductRequestDto {
   @ApiProperty()
   description: string;
 
-  @ApiProperty()
-  ingredients: Ingredient[];
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => IngredientDto)
+  @ApiProperty({ type: () => IngredientDto, isArray: true })
+  ingredients: IngredientDto[];
 
-  @ApiProperty()
-  nutritionFacts?: NutritionFacts;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => NutritionFactsDto)
+  @ApiPropertyOptional({ type: NutritionFactsDto })
+  nutritionFacts?: NutritionFactsDto;
 
   @IsBoolean()
   @ApiProperty()

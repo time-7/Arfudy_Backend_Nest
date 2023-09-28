@@ -21,3 +21,17 @@ Produção:
 ``` bash
 npm run start:prod
 ```
+
+## Testes
+
+não esquecer de adicionar ambas as strings de conexão, assim como o example.env
+
+casos de uso
+```bash
+npm run test
+```
+
+testes de integração
+```bash
+npm run test:e2e
+```

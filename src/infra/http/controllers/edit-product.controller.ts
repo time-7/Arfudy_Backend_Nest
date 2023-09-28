@@ -1,8 +1,7 @@
-import {
-  EditProductUseCase,
-  EditProductUseCaseRequest,
-} from '@domain/menu/application/use-cases/edit-product.use-case';
+import { EditProductUseCase } from '@domain/menu/application/use-cases/edit-product.use-case';
 import { Controller, Param, Body, Patch } from '@nestjs/common';
+import { ProductNutritionValidationPipe } from '../pipes/product-nutrition-validation.pipe';
+import { EditProductRequestDto } from '../dtos/edit-product.request.dto';
 
 @Controller('products')
 export class EditProductController {
@@ -11,7 +10,7 @@ export class EditProductController {
   @Patch(':id')
   async handle(
     @Param('id') id: string,
-    @Body() data: EditProductUseCaseRequest,
+    @Body(new ProductNutritionValidationPipe()) data: EditProductRequestDto,
   ) {
     const { message } = await this.updateProductUseCase.execute({
       id,
