@@ -3,10 +3,13 @@ import { AppModule } from './app.module';
 import { EnvService } from './env/env.service';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ResourceNotFoundFilter } from './filters/resource-not-found.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const envService = app.get(EnvService);
+
+  app.useGlobalFilters(new ResourceNotFoundFilter());
 
   app.enableCors({
     origin: true,
