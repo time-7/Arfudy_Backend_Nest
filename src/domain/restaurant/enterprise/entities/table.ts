@@ -1,4 +1,6 @@
 import { Entity } from '@core/entities/entity';
+import { randomUUID } from 'crypto';
+import { UniqueEntityId } from '@core/entities/unique-entity-id';
 
 export interface TableProps {
   tableNum: number;
@@ -24,5 +26,19 @@ export class Table extends Entity<TableProps> {
   }
   set seatNum(seatNum: number) {
     this.props.seatNum = seatNum;
+  }
+
+  static create(
+    { tableNum, activeToken, seatNum }: TableProps,
+    id?: UniqueEntityId,
+  ) {
+    return new Table(
+      {
+        tableNum,
+        activeToken: activeToken ?? randomUUID(),
+        seatNum,
+      },
+      id,
+    );
   }
 }
