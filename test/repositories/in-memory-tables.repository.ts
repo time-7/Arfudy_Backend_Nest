@@ -8,6 +8,10 @@ export class InMemoryTablesRepository implements TablesRepository {
     this.items.push(table);
   }
 
+  save(entity: Table): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
   findMany(): Promise<Table[]> {
     throw new Error('Method not implemented.');
   }
@@ -16,7 +20,7 @@ export class InMemoryTablesRepository implements TablesRepository {
     throw new Error('Method not implemented.');
   }
 
-  delete(table: Table): Promise<void> {
+  delete(entity: Table): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }
