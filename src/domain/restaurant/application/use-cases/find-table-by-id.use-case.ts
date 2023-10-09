@@ -1,6 +1,6 @@
 import { Table } from '@domain/restaurant/enterprise/entities/table';
 import { Injectable } from '@nestjs/common';
-import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-found.error';
+import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
 import { TablesRepository } from '../repositories/table.repository';
 
 export interface FindTableByIdUseCaseRequest {
@@ -12,7 +12,7 @@ export interface FindTableByIdUseCaseResponse {
 }
 
 @Injectable()
-export class FindTableById {
+export class FindTableByIdUseCase {
   constructor(private readonly tablesRepository: TablesRepository) {}
 
   async execute({
