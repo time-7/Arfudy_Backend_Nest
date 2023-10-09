@@ -1,16 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateTableRequestDto {
   @IsString()
-  @ApiProperty()
-  activeToken: string;
+  @ApiPropertyOptional()
+  @IsOptional()
+  activeToken?: string;
 
-  @IsString()
+  @IsInt()
   @ApiProperty()
   tableNum: number;
 
-  @IsString()
+  @IsInt()
   @ApiProperty()
   seatNum: number;
 }
