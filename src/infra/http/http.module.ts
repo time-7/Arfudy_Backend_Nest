@@ -14,6 +14,7 @@ import { EditTableUseCase } from '@domain/restaurant/application/use-cases/edit-
 import { DeleteTableUseCase } from '@domain/restaurant/application/use-cases/delete-table.use-case';
 import { CreateTableController } from './controllers/create-table.controller';
 import { EditTableController } from './controllers/edit-table.controller';
+import { DeleteTableController } from './controllers/delete-table.controller';
 
 @Module({
   imports: [],
@@ -25,6 +26,7 @@ import { EditTableController } from './controllers/edit-table.controller';
     EditProductController,
     CreateTableController,
     EditTableController,
+    DeleteTableController,
   ],
   providers: [
     FindAllProductsUseCase,

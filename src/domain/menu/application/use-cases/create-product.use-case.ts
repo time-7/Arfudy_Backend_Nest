@@ -2,13 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Product } from '../../enterprise/entities/products';
 import { ProductsRepository } from '../repositories/products.repository';
 import { CreateProductRequestDto } from '@infra/http/dtos/create-product.request.dto';
-import { CreatedResponse } from '@core/responses/responses/created.response';
-import { ProductPresenter } from '@infra/http/presenters/product.presenter';
 
 export interface CreateProductUseCaseRequest extends CreateProductRequestDto {}
 
-interface CreateProductUseCaseResponse
-  extends CreatedResponse<ProductPresenter, 'id'> {}
+interface CreateProductUseCaseResponse {
+  product: Product;
+}
 
 @Injectable()
 export class CreateProductUseCase {
@@ -38,8 +37,7 @@ export class CreateProductUseCase {
     product = await this.productsRepository.create(product);
 
     return {
-      data: { id: product.id.toString() },
-      message: 'Produto criado com sucesso!',
+      product,
     };
   }
 }

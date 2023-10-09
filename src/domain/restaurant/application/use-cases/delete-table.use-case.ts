@@ -10,7 +10,7 @@ interface DeleteTableUseCaseRequest {
 export class DeleteTableUseCase {
   constructor(private readonly tableRepository: TablesRepository) {}
 
-  async execute({ id }: DeleteTableUseCaseRequest) {
+  async execute({ id }: DeleteTableUseCaseRequest): Promise<void> {
     const table = await this.tableRepository.findById(id);
     if (!table) throw new ResourceNotFoundError();
 

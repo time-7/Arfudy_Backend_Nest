@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TablesRepository } from '../repositories/table.repository';
 import { Table } from '../../enterprise/entities/table';
-import { UseCaseResponse } from '@core/responses/use-case.response';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
 import { CreateTableRequestDto } from '@infra/http/dtos/create-table.request.dto';
 
@@ -9,8 +8,8 @@ export interface CreateTableUseCaseRequest extends CreateTableRequestDto {
   id?: UniqueEntityId;
 }
 
-export interface CreateTableUseCaseResponse extends UseCaseResponse {
-  data: string;
+interface CreateTableUseCaseResponse {
+  table: Table;
 }
 
 @Injectable()
@@ -28,8 +27,7 @@ export class CreateTableUseCase {
     await this.tablesRepository.create(table);
 
     return {
-      data: table.id.toString(),
-      message: 'Mesa cadastrada com sucesso!',
+      table,
     };
   }
 }

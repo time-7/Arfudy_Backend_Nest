@@ -1,15 +1,16 @@
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import { AppModule } from '../../app.module';
 import { makeProductWithoutIngredients } from '@test/factories/make-product';
 import request from 'supertest';
-import { PrismaService } from '../../database/prisma/prisma.service';
 import { PrismaProductsMapper } from '../../database/prisma/mappers/prisma-products.mapper';
+import { INestApplication } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { AppModule } from '../../app.module';
+import { PrismaService } from '../../database/prisma/prisma.service';
+import { Test } from '@nestjs/testing';
 
 describe('Find Product By Id (E2E)', () => {
   let app: INestApplication;
-  let prisma: PrismaService;
   let httpServer;
+  let prisma: PrismaClient;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -18,13 +19,12 @@ describe('Find Product By Id (E2E)', () => {
     }).compile();
 
     app = moduleRef.createNestApplication();
-    prisma = moduleRef.get(PrismaService);
 
     await app.init();
 
     httpServer = app.getHttpServer();
+    prisma = app.get(PrismaService);
   });
-
   describe('[GET] /api/products/id', () => {
     it('should be able to get a product by id', async () => {
       const product = makeProductWithoutIngredients();

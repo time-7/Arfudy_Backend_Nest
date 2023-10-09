@@ -2,6 +2,7 @@ import { EditProductUseCase } from '@domain/menu/application/use-cases/edit-prod
 import { Controller, Param, Body, Patch } from '@nestjs/common';
 import { ProductNutritionValidationPipe } from '../pipes/product-nutrition-validation.pipe';
 import { EditProductRequestDto } from '../dtos/edit-product.request.dto';
+import { UseCaseResponse } from '@core/responses/use-case.response';
 
 @Controller('products')
 export class EditProductController {
@@ -11,12 +12,12 @@ export class EditProductController {
   async handle(
     @Param('id') id: string,
     @Body(new ProductNutritionValidationPipe()) data: EditProductRequestDto,
-  ) {
-    const { message } = await this.updateProductUseCase.execute({
+  ): Promise<UseCaseResponse> {
+    await this.updateProductUseCase.execute({
       id,
       ...data,
     });
 
-    return { message };
+    return { message: 'Produto salvo com sucesso!' };
   }
 }

@@ -22,6 +22,6 @@ const prisma = new PrismaClient({
 });
 
 afterAll(async () => {
-  await prisma.product.deleteMany();
+  //await prisma.product.deleteMany();
   await prisma.$disconnect();
 });
