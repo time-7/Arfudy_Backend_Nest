@@ -10,6 +10,7 @@ export class PrismaTablesRepository implements TablesRepository {
 
   async create(entity: Table): Promise<void> {
     const data = PrismaTablesMapper.toPrisma(entity);
+
     await this.prisma.table.create({ data });
   }
 
@@ -19,8 +20,9 @@ export class PrismaTablesRepository implements TablesRepository {
     return tables.map(PrismaTablesMapper.toDomain);
   }
 
-  async findById(id: string): Promise<Table> {
+  async findById(id: string): Promise<Table | null> {
     const table = await this.prisma.table.findFirst({ where: { id } });
+    if (!table) return null;
 
     return PrismaTablesMapper.toDomain(table);
   }

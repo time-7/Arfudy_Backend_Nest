@@ -16,7 +16,7 @@ export class FindAllProductsController {
     const { products } = await this.findAllProductsUseCase.execute();
 
     return {
-      products,
+      data: products.map(ProductPresenter.toHttp),
     };
   }
 }

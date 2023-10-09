@@ -20,12 +20,13 @@ describe('Edit Table', () => {
 
     await inMemoryTablesRepository.create(table);
 
-    const result = await sut.execute({
-      id: id.toString(),
-      activeToken: randomUUID(),
-    });
+    const newToken = randomUUID();
 
-    expect(result.message).toEqual('Mesa salva com sucesso!');
+    await sut.execute({
+      id: id.toString(),
+      activeToken: newToken,
+    });
+    expect(inMemoryTablesRepository.items[0].activeToken).toEqual(newToken);
   });
 
   it('should not be able to edit a non existing table', async () => {

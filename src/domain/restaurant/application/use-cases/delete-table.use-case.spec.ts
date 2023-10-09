@@ -12,7 +12,7 @@ describe('Delete Table', () => {
     sut = new DeleteTableUseCase(inMemoryTablesRepository);
   });
 
-  it('should be able to delete an existing table', async () => {
+  it('should be able to delete an existing table with no relations', async () => {
     const table = makeTable({}, UniqueEntityId.createFromInt(1));
     inMemoryTablesRepository.create(table);
 

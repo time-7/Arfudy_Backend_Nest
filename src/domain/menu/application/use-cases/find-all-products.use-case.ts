@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsRepository } from '../repositories/products.repository';
-import { ProductPresenter } from '@infra/http/presenters/product.presenter';
+import { Product } from '../../enterprise/entities/products';
 
-interface FindAllProductsUseCaseResponse {
-  products: ProductPresenter[];
+export interface FindAllProductsUseCaseResponse {
+  products: Product[];
 }
 
 @Injectable()
@@ -13,6 +13,6 @@ export class FindAllProductsUseCase {
   async execute(): Promise<FindAllProductsUseCaseResponse> {
     const products = await this.productsRepository.findMany();
 
-    return { products: products.map(ProductPresenter.toHttp) };
+    return { products };
   }
 }

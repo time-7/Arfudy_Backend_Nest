@@ -9,7 +9,7 @@ import { PrismaProductsMapper } from '../../database/prisma/mappers/prisma-produ
 import { makeIngredient } from '@test/factories/make-ingredient';
 import { makeNutritionFacts } from '@test/factories/make-nutrition-facts';
 
-describe('Create Product (E2E)', () => {
+describe('Edit Product (E2E)', () => {
   let app: INestApplication;
   let httpServer;
   let prisma: PrismaClient;

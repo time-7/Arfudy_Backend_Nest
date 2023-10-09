@@ -1,15 +1,16 @@
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import { AppModule } from '../../app.module';
 import { makeProductWithoutIngredients } from '@test/factories/make-product';
 import request from 'supertest';
-import { PrismaService } from '../../database/prisma/prisma.service';
 import { PrismaProductsMapper } from '../../database/prisma/mappers/prisma-products.mapper';
+import { INestApplication } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { Test } from '@nestjs/testing';
+import { AppModule } from '../../app.module';
+import { PrismaService } from '../../database/prisma/prisma.service';
 
 describe('Find All Products (E2E)', () => {
   let app: INestApplication;
-  let prisma: PrismaService;
   let httpServer;
+  let prisma: PrismaClient;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -18,13 +19,12 @@ describe('Find All Products (E2E)', () => {
     }).compile();
 
     app = moduleRef.createNestApplication();
-    prisma = moduleRef.get(PrismaService);
 
     await app.init();
 
     httpServer = app.getHttpServer();
+    prisma = app.get(PrismaService);
   });
-
   it('[GET] /api/products', async () => {
     const product = makeProductWithoutIngredients();
     await prisma.product.create({
@@ -34,6 +34,6 @@ describe('Find All Products (E2E)', () => {
     const response = await request(httpServer).get('/products');
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.products.length).toBeGreaterThanOrEqual(1);
+    expect(response.body.data.length).toBeGreaterThanOrEqual(1);
   });
 });

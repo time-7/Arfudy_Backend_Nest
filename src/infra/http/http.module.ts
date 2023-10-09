@@ -14,6 +14,11 @@ import { EditTableUseCase } from '@domain/restaurant/application/use-cases/edit-
 import { DeleteTableUseCase } from '@domain/restaurant/application/use-cases/delete-table.use-case';
 import { CreateTableController } from './controllers/create-table.controller';
 import { EditTableController } from './controllers/edit-table.controller';
+import { DeleteTableController } from './controllers/delete-table.controller';
+import { FindAllTablesController } from './controllers/find-all-tables.controller';
+import { FindTableByIdController } from './controllers/find-table-by-id.controller';
+import { FindAllTablesUseCase } from '@domain/restaurant/application/use-cases/find-all-tables.use-case';
+import { FindTableByIdUseCase } from '@domain/restaurant/application/use-cases/find-table-by-id.use-case';
 
 @Module({
   imports: [],
@@ -25,6 +30,9 @@ import { EditTableController } from './controllers/edit-table.controller';
     EditProductController,
     CreateTableController,
     EditTableController,
+    DeleteTableController,
+    FindAllTablesController,
+    FindTableByIdController,
   ],
   providers: [
     FindAllProductsUseCase,
@@ -35,6 +43,8 @@ import { EditTableController } from './controllers/edit-table.controller';
     CreateTableUseCase,
     EditTableUseCase,
     DeleteTableUseCase,
+    FindAllTablesUseCase,
+    FindTableByIdUseCase,
   ],
 })
 export class HttpModule {}
