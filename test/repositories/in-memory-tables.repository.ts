@@ -8,19 +8,25 @@ export class InMemoryTablesRepository implements TablesRepository {
     this.items.push(table);
   }
 
-  save(entity: Table): Promise<void> {
-    throw new Error('Method not implemented.');
+  async save(entity: Table): Promise<void> {
+    const index = this.items.findIndex((item) => item.id === entity.id);
+    this.items[index] = entity;
   }
 
   findMany(): Promise<Table[]> {
     throw new Error('Method not implemented.');
   }
 
-  findById(id: string): Promise<Table> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Table | null> {
+    const table = this.items.find((item) => item.id.toString() === id);
+    if (!table) return null;
+
+    return table;
   }
 
-  delete(entity: Table): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(entity: Table): Promise<void> {
+    const index = this.items.findIndex((item) => item.id === entity.id);
+
+    this.items.splice(index, 1);
   }
 }

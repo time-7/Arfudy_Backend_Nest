@@ -9,6 +9,11 @@ import { FindProductByIdUseCase } from '@domain/menu/application/use-cases/find-
 import { FindProductsByIdController } from './controllers/find-product-by-id.controller';
 import { EditProductController } from './controllers/edit-product.controller';
 import { EditProductUseCase } from '@domain/menu/application/use-cases/edit-product.use-case';
+import { CreateTableUseCase } from '@domain/restaurant/application/use-cases/create-table.use-case';
+import { EditTableUseCase } from '@domain/restaurant/application/use-cases/edit-table.use-case';
+import { DeleteTableUseCase } from '@domain/restaurant/application/use-cases/delete-table.use-case';
+import { CreateTableController } from './controllers/create-table.controller';
+import { EditTableController } from './controllers/edit-table.controller';
 
 @Module({
   imports: [],
@@ -18,6 +23,8 @@ import { EditProductUseCase } from '@domain/menu/application/use-cases/edit-prod
     DeleteProductsController,
     FindProductsByIdController,
     EditProductController,
+    CreateTableController,
+    EditTableController,
   ],
   providers: [
     FindAllProductsUseCase,
@@ -25,6 +32,9 @@ import { EditProductUseCase } from '@domain/menu/application/use-cases/edit-prod
     DeleteProductUseCase,
     FindProductByIdUseCase,
     EditProductUseCase,
+    CreateTableUseCase,
+    EditTableUseCase,
+    DeleteTableUseCase,
   ],
 })
 export class HttpModule {}

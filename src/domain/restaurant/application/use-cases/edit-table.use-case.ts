@@ -3,10 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { TablesRepository } from '../repositories/table.repository';
 import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
 import { EditTableRequestDto } from '@infra/http/dtos/edit-table.request.dto';
+import { randomUUID } from 'crypto';
 
 export class EditTableuseCaseRequest extends EditTableRequestDto {}
 
-interface EditTableUseCaseResponse extends UseCaseResponse {}
+export interface EditTableUseCaseResponse extends UseCaseResponse {}
 
 @Injectable()
 export class EditTableUseCase {
@@ -21,7 +22,7 @@ export class EditTableUseCase {
     const table = await this.tableRepository.findById(id);
     if (!table) throw new ResourceNotFoundError();
 
-    table.activeToken = activeToken;
+    table.activeToken = activeToken ?? randomUUID();
     table.tableNum = tableNum;
     table.seatNum = seatNum;
 

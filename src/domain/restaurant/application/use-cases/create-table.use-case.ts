@@ -3,12 +3,10 @@ import { TablesRepository } from '../repositories/table.repository';
 import { Table } from '../../enterprise/entities/table';
 import { UseCaseResponse } from '@core/responses/use-case.response';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
+import { CreateTableRequestDto } from '@infra/http/dtos/create-table.request.dto';
 
-export interface CreateTableUseCaseRequest {
+export interface CreateTableUseCaseRequest extends CreateTableRequestDto {
   id?: UniqueEntityId;
-  activeToken?: string;
-  tableNum: number;
-  seatNum: number;
 }
 
 export interface CreateTableUseCaseResponse extends UseCaseResponse {
