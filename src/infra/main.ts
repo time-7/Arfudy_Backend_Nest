@@ -1,15 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { EnvService } from './env/env.service';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResourceNotFoundFilter } from './filters/resource-not-found.filter';
+import { PrismaExceptionFilter } from './filters/prisma-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const envService = app.get(EnvService);
+  const logger = new Logger('arfudyBackendAPI');
 
-  app.useGlobalFilters(new ResourceNotFoundFilter());
+  app.useGlobalFilters(
+    new ResourceNotFoundFilter(),
+    new PrismaExceptionFilter(),
+  );
 
   app.enableCors({
     origin: true,
@@ -24,7 +29,7 @@ async function bootstrap() {
     .setGlobalPrefix('api');
 
   const documentConfig = new DocumentBuilder()
-    .setTitle('arfudy BackEnd')
+    .setTitle('arfudy Backend API')
     .setDescription('arfudy backend with nestjs')
     .setVersion(envService.get('VERSION'))
     .build();
@@ -35,10 +40,10 @@ async function bootstrap() {
   await app
     .listen(envService.get('PORT'))
     .then(() =>
-      console.log(`HTTP server listening on port ${envService.get('PORT')}`),
+      logger.log(`HTTP server listening on port ${envService.get('PORT')}`),
     )
     .catch((err) => {
-      console.error(err);
+      logger.error(err);
     });
 }
 bootstrap();
