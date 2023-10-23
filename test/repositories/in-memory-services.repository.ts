@@ -8,8 +8,8 @@ export class InMemoryServicesRepository implements ServicesRepository {
     await this.items.push(entity);
   }
 
-  findMany(): Promise<Service[]> {
-    throw new Error('Method not implemented.');
+  async findMany(): Promise<Service[]> {
+    return await this.items;
   }
 
   findById(id: string): Promise<Service> {

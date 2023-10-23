@@ -12,7 +12,7 @@ export class Client {
     clientToken,
   }: Optional<Client, 'clientToken'>) {
     this.name = name;
-    this.isAdmin = isAdmin;
+    this.isAdmin = isAdmin ?? false;
     this.clientToken = clientToken ?? randomUUID();
   }
 

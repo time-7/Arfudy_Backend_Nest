@@ -15,7 +15,13 @@ describe('Create Service', () => {
   it('should be able to create a service and have an active token', async () => {
     const service = makeService();
 
-    await sut.execute(service);
+    await sut.execute({
+      tableId: service.tableId,
+      tableToken: service.tableToken,
+      serviceToken: service.serviceToken,
+      hasEnded: service.hasEnded,
+      client: service.clients[0],
+    });
 
     expect(inMemoryServicesRepository.items).toHaveLength(1);
   });

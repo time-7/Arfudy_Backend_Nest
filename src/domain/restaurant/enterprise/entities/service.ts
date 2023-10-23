@@ -1,7 +1,7 @@
-import { Entity } from '@core/entities/entity';
 import { Client } from './value-objects/client';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
 import { randomUUID } from 'crypto';
+import { Entity } from '@core/entities/entity';
 
 type ServiceProps = {
   tableToken: string;
@@ -30,6 +30,10 @@ export class Service extends Entity<ServiceProps> {
 
   get clients() {
     return this.props.clients;
+  }
+
+  end(): void {
+    this.props.hasEnded = true;
   }
 
   static create(

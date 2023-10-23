@@ -3,15 +3,24 @@ import { Service } from '@domain/restaurant/enterprise/entities/service';
 import { PrismaServicesMapper } from '../mappers/prisma-services.mapper';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
+import { io, Socket } from 'socket.io-client';
 
 @Injectable()
 export class PrismaServicesRepository implements ServicesRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  socketClient: Socket;
+
+  constructor(private readonly prisma: PrismaService) {
+    this.socketClient = io(`http://localhost:${process.env.PORT}`, {
+      transports: ['websocket'],
+    });
+  }
 
   async create(entity: Service): Promise<void> {
     const data = PrismaServicesMapper.toPrisma(entity);
 
     await this.prisma.service.create({ data });
+
+    this.registerConsumerEvents(entity);
   }
 
   async findMany(): Promise<Service[]> {
@@ -39,5 +48,9 @@ export class PrismaServicesRepository implements ServicesRepository {
 
   delete(entity: Service): Promise<void> {
     throw new Error('Method not implemented.');
+  }
+
+  private registerConsumerEvents(body: Service): void {
+    this.socketClient.emit('newService', { data: body });
   }
 }
