@@ -5,6 +5,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResourceNotFoundFilter } from './filters/resource-not-found.filter';
 import { PrismaExceptionFilter } from './filters/prisma-exception.filter';
+import { TableInUseFilter } from './filters/table-in-use.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
   app.useGlobalFilters(
     new ResourceNotFoundFilter(),
     new PrismaExceptionFilter(),
+    new TableInUseFilter(),
   );
 
   app.enableCors({

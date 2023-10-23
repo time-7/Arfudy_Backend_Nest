@@ -19,6 +19,10 @@ import { FindAllTablesController } from './controllers/find-all-tables.controlle
 import { FindTableByIdController } from './controllers/find-table-by-id.controller';
 import { FindAllTablesUseCase } from '@domain/restaurant/application/use-cases/find-all-tables.use-case';
 import { FindTableByIdUseCase } from '@domain/restaurant/application/use-cases/find-table-by-id.use-case';
+import { StartServiceController } from './controllers/start-service.controller';
+import { StartServiceUseCase } from '@domain/restaurant/application/use-cases/start-service.use-case';
+import { FindAllServicesController } from './controllers/find-all-services.controller';
+import { FindAllServicesUseCase } from '@domain/restaurant/application/use-cases/find-all-services.use-case';
 
 @Module({
   imports: [],
@@ -33,6 +37,8 @@ import { FindTableByIdUseCase } from '@domain/restaurant/application/use-cases/f
     DeleteTableController,
     FindAllTablesController,
     FindTableByIdController,
+    StartServiceController,
+    FindAllServicesController,
   ],
   providers: [
     FindAllProductsUseCase,
@@ -45,6 +51,8 @@ import { FindTableByIdUseCase } from '@domain/restaurant/application/use-cases/f
     DeleteTableUseCase,
     FindAllTablesUseCase,
     FindTableByIdUseCase,
+    StartServiceUseCase,
+    FindAllServicesUseCase,
   ],
 })
 export class HttpModule {}
