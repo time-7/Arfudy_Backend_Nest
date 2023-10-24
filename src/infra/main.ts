@@ -42,7 +42,7 @@ async function bootstrap() {
   await app
     .listen(envService.get('PORT'))
     .then(() =>
-      logger.log(`HTTP server listening on port ${envService.get('PORT')}`),
+      logger.log(`Server listening on port ${envService.get('PORT')}`),
     )
     .catch((err) => {
       logger.error(err);

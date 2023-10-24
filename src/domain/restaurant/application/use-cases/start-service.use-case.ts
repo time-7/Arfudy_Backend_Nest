@@ -3,6 +3,9 @@ import { ServicesRepository } from '../repositories/services.repository';
 import { TableInUseError } from './errors/table-in-use.error';
 import { Service } from '../../enterprise/entities/service';
 import { StartServiceRequestDto } from '@infra/http/dtos/start-service.request.dto';
+import { UniqueEntityId } from '@core/entities/unique-entity-id';
+import { UniqueToken } from '@core/entities/unique-token';
+import { Client } from '../../enterprise/entities/value-objects/client';
 
 export interface StartServiceUseCaseRequest extends StartServiceRequestDto {}
 
@@ -29,13 +32,13 @@ export class StartServiceUseCase {
         'Já existe um atendimento iniciado para o token fornecido',
       );
 
-    client.isAdmin = true;
+    client.isAdmin = client.isAdmin ?? true;
     const service: Service = Service.create({
-      tableId,
-      tableToken,
-      clients: [client],
+      tableId: UniqueEntityId.createFromRawId(tableId),
+      tableToken: UniqueToken.createFromRaw(tableToken),
+      clients: [Client.create(client)],
       hasEnded,
-      serviceToken,
+      serviceToken: UniqueToken.createFromRaw(serviceToken),
     });
 
     await this.servicesRepository.create(service);

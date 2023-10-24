@@ -23,6 +23,8 @@ import { StartServiceController } from './controllers/start-service.controller';
 import { StartServiceUseCase } from '@domain/restaurant/application/use-cases/start-service.use-case';
 import { FindAllServicesController } from './controllers/find-all-services.controller';
 import { FindAllServicesUseCase } from '@domain/restaurant/application/use-cases/find-all-services.use-case';
+import { FindServiceByIdUseCase } from '@domain/restaurant/application/use-cases/find-service-by-id.use-case';
+import { FindServiceByIdController } from './controllers/find-service-by-id.controller';
 
 @Module({
   imports: [],
@@ -39,6 +41,7 @@ import { FindAllServicesUseCase } from '@domain/restaurant/application/use-cases
     FindTableByIdController,
     StartServiceController,
     FindAllServicesController,
+    FindServiceByIdController,
   ],
   providers: [
     FindAllProductsUseCase,
@@ -53,6 +56,7 @@ import { FindAllServicesUseCase } from '@domain/restaurant/application/use-cases
     FindTableByIdUseCase,
     StartServiceUseCase,
     FindAllServicesUseCase,
+    FindServiceByIdUseCase,
   ],
 })
 export class HttpModule {}

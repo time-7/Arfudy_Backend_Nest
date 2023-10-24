@@ -1,12 +1,12 @@
 import { Client } from './value-objects/client';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
-import { randomUUID } from 'crypto';
 import { Entity } from '@core/entities/entity';
+import { UniqueToken } from '@core/entities/unique-token';
 
-type ServiceProps = {
-  tableToken: string;
-  serviceToken: string;
-  tableId: string;
+export type ServiceProps = {
+  tableToken: UniqueToken;
+  serviceToken: UniqueToken;
+  tableId: UniqueEntityId;
   hasEnded: boolean;
   clients: Client[];
 };
@@ -44,7 +44,7 @@ export class Service extends Entity<ServiceProps> {
       {
         tableId,
         tableToken,
-        serviceToken: serviceToken ?? randomUUID(),
+        serviceToken: serviceToken ?? UniqueToken.create(),
         hasEnded,
         clients: clients.map((client) => {
           return Client.create({

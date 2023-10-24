@@ -1,9 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { HttpResponse } from '../http.response';
 
-export class CreatedResponse<T, K extends keyof T> implements HttpResponse {
-  @ApiProperty()
-  data: Pick<T, K>;
+export class DeletedResponse implements HttpResponse {
   @ApiProperty()
   message: string;
 }

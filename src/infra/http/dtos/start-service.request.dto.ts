@@ -1,23 +1,44 @@
-import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsMongoId,
-  IsNotEmpty,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 
+class ClientRequestDto {
+  @ApiProperty()
+  @IsString()
+  name: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isAdmin: boolean;
+}
+
 export class StartServiceRequestDto {
+  @ApiProperty()
   @IsString()
   tableToken: string;
+
+  @ApiProperty()
   @IsString()
   @IsOptional()
   serviceToken: string;
+
+  @ApiProperty()
   @IsMongoId()
   tableId: string;
+
+  @ApiProperty()
   @IsBoolean()
   @IsOptional()
   hasEnded: boolean;
-  @IsNotEmpty()
-  client: Client;
+
+  @ValidateNested()
+  @Type(() => ClientRequestDto)
+  @ApiProperty({ type: () => ClientRequestDto })
+  client: ClientRequestDto;
 }

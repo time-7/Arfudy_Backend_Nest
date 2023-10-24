@@ -4,12 +4,16 @@ import { ProductNutritionValidationPipe } from '../pipes/product-nutrition-valid
 import { EditProductRequestDto } from '../dtos/edit-product.request.dto';
 import { HttpResponse } from '@core/responses/http.response';
 import { MongoIdValidationPipe } from '../pipes/mongo-id-validation.pipe';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { EditedResponse } from '@core/responses/responses/edited.response';
 
 @Controller('products')
+@ApiTags('Products')
 export class EditProductController {
   constructor(private readonly updateProductUseCase: EditProductUseCase) {}
 
   @Patch(':id')
+  @ApiOkResponse({ type: () => EditedResponse })
   async handle(
     @Param('id', MongoIdValidationPipe) id: string,
     @Body(new ProductNutritionValidationPipe()) data: EditProductRequestDto,

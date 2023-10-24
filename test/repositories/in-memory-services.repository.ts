@@ -1,5 +1,5 @@
 import { ServicesRepository } from '@domain/restaurant/application/repositories/services.repository';
-import { Service } from '../../src/domain/restaurant/enterprise/entities/service';
+import { Service } from '@domain/restaurant/enterprise/entities/service';
 
 export class InMemoryServicesRepository implements ServicesRepository {
   items: Service[] = [];
@@ -12,13 +12,16 @@ export class InMemoryServicesRepository implements ServicesRepository {
     return await this.items;
   }
 
-  findById(id: string): Promise<Service> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Service> {
+    const service = await this.items.find((item) => item.id.toString() === id);
+    if (!service) return null;
+
+    return service;
   }
 
   async findByTableToken(tableToken: string): Promise<Service | null> {
     const itemIndex = await this.items.findIndex(
-      (item) => item.tableToken === tableToken,
+      (item) => item.tableToken.toString() === tableToken,
     );
     const service = this.items[itemIndex];
     if (!service) return null;
@@ -26,11 +29,19 @@ export class InMemoryServicesRepository implements ServicesRepository {
     return service;
   }
 
-  save(entity: Service): Promise<void> {
-    throw new Error('Method not implemented.');
+  async save(entity: Service): Promise<void> {
+    const index = await this.items.findIndex((item) =>
+      item.id.equals(entity.id),
+    );
+
+    this.items[index] = entity;
   }
 
-  delete(entity: Service): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(entity: Service): Promise<void> {
+    const index = await this.items.findIndex((item) =>
+      item.id.equals(entity.id),
+    );
+
+    this.items.splice(index, 1);
   }
 }

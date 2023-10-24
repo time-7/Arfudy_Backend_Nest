@@ -44,13 +44,13 @@ model Table {
 }
 
 model Service {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
-  tableToken   String  @map("table_token")
-  serviceToken String  @map("service_token")
-  tableId      String  @map("table_id") @db.ObjectId
-  hasEnded     Boolean @default(false) @map("has_ended")
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  tableToken   String   @map("table_token")
+  serviceToken String   @map("service_token")
+  tableId      String   @map("table_id") @db.ObjectId
+  hasEnded     Boolean  @default(false) @map("has_ended")
   clients      client[]
-  table        Table   @relation(fields: [tableId], references: [id])
+  table        Table    @relation(fields: [tableId], references: [id])
 }
 
 type client {

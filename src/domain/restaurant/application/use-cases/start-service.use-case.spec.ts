@@ -16,9 +16,9 @@ describe('Create Service', () => {
     const service = makeService();
 
     await sut.execute({
-      tableId: service.tableId,
-      tableToken: service.tableToken,
-      serviceToken: service.serviceToken,
+      tableId: service.tableId.toString(),
+      tableToken: service.tableToken.toString(),
+      serviceToken: service.serviceToken.toString(),
       hasEnded: service.hasEnded,
       client: service.clients[0],
     });
