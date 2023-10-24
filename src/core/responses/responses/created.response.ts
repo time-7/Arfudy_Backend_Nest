@@ -1,6 +1,9 @@
-import { UseCaseResponse } from '../use-case.response';
+import { ApiProperty } from '@nestjs/swagger';
+import { HttpResponse } from '../http.response';
 
-export class CreatedResponse<T, K extends keyof T> implements UseCaseResponse {
+export class CreatedResponse<T, K extends keyof T> implements HttpResponse {
+  @ApiProperty()
   data: Pick<T, K>;
+  @ApiProperty()
   message: string;
 }

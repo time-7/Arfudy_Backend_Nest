@@ -76,6 +76,7 @@ export class CreateProductRequestDto {
   price: number;
 
   @IsString()
-  @ApiProperty()
+  @IsOptional()
+  @ApiPropertyOptional()
   unityModelId: string;
 }

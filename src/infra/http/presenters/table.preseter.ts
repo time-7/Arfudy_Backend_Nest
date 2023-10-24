@@ -20,7 +20,7 @@ export class TablePresenter {
     id: string,
   ) {
     this.id = id;
-    this.activeToken = activeToken;
+    this.activeToken = activeToken.toString();
     this.seatNum = seatNum;
     this.tableNum = tableNum;
   }

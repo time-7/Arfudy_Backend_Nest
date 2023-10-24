@@ -2,8 +2,8 @@ import { InMemoryTablesRepository } from '@test/repositories/in-memory-tables.re
 import { EditTableUseCase } from './edit-table.use-case';
 import { makeTable } from '@test/factories/make-table';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
-import { randomUUID } from 'crypto';
 import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
+import { UniqueToken } from '@core/entities/unique-token';
 
 describe('Edit Table', () => {
   let inMemoryTablesRepository: InMemoryTablesRepository;
@@ -20,11 +20,11 @@ describe('Edit Table', () => {
 
     await inMemoryTablesRepository.create(table);
 
-    const newToken = randomUUID();
+    const newToken = UniqueToken.create();
 
     await sut.execute({
       id: id.toString(),
-      activeToken: newToken,
+      activeToken: newToken.toString(),
     });
     expect(inMemoryTablesRepository.items[0].activeToken).toEqual(newToken);
   });
@@ -37,7 +37,7 @@ describe('Edit Table', () => {
     expect(async () => {
       return await sut.execute({
         id: UniqueEntityId.createFromInt(1).toString(),
-        activeToken: randomUUID(),
+        activeToken: UniqueToken.create().toString(),
       });
     }).rejects.toBeInstanceOf(ResourceNotFoundError);
   });

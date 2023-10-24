@@ -5,9 +5,11 @@ import { ApiProperty } from '@nestjs/swagger';
 export class IngredientPresenter {
   @ApiProperty()
   name: string;
+
   @ApiProperty()
   quantity: number;
-  @ApiProperty()
+
+  @ApiProperty({ type: () => NutritionFactsPresenter })
   nutritionFacts: NutritionFactsPresenter;
 
   private constructor({ name, quantity, nutritionFacts }: IngredientPresenter) {

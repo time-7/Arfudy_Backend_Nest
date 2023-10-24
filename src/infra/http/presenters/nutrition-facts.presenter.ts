@@ -4,10 +4,13 @@ import { NutritionFacts } from '@domain/menu/enterprise/entities/value-objects/n
 export class NutritionFactsPresenter {
   @ApiProperty()
   carbohydrate: number;
+
   @ApiProperty()
   protein: number;
+
   @ApiProperty()
   totalFat: number;
+
   @ApiProperty()
   totalCalories: number;
 

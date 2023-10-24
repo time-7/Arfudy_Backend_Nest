@@ -4,8 +4,10 @@ import { ProductNutritionValidationPipe } from '../pipes/product-nutrition-valid
 import { CreateProductRequestDto } from '../dtos/create-product.request.dto';
 import { CreatedResponse } from '@core/responses/responses/created.response';
 import { ProductPresenter } from '../presenters/product.presenter';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('products')
+@ApiTags('Products')
 export class CreateProductsController {
   constructor(private createProductsUseCase: CreateProductUseCase) {}
 

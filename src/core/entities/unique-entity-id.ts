@@ -15,6 +15,10 @@ export class UniqueEntityId {
     return this.value;
   }
 
+  equals(id: UniqueEntityId): boolean {
+    return id.toString() === this.toString();
+  }
+
   static createFromInt(value: number) {
     return new UniqueEntityId(value);
   }
