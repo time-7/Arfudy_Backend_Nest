@@ -22,6 +22,6 @@ export class JoinServiceController {
       ...data,
     });
 
-    return { data: clientToken };
+    return { data: { clientToken } };
   }
 }

@@ -3,8 +3,13 @@ import { NutritionFacts } from '../../enterprise/entities/value-objects/nutritio
 import { ProductsRepository } from '../repositories/products.repository';
 import { Injectable } from '@nestjs/common';
 import { EditProductRequestDto } from '@infra/http/dtos/edit-product.request.dto';
+import { Product } from '../../enterprise/entities/products';
 
 export class EditProductUseCaseRequest extends EditProductRequestDto {}
+
+export type EditProductUseCaseResponse = {
+  product: Product;
+};
 
 @Injectable()
 export class EditProductUseCase {
@@ -20,7 +25,7 @@ export class EditProductUseCase {
     nutritionFacts,
     price,
     unityModelId,
-  }: EditProductUseCaseRequest): Promise<void> {
+  }: EditProductUseCaseRequest): Promise<EditProductUseCaseResponse> {
     const product = await this.productsRepository.findById(id);
     if (!product) throw new ResourceNotFoundError();
 
@@ -36,5 +41,7 @@ export class EditProductUseCase {
     product.unityModelId = unityModelId;
 
     await this.productsRepository.save(product);
+
+    return { product };
   }
 }
