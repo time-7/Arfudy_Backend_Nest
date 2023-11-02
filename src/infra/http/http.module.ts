@@ -25,6 +25,8 @@ import { FindAllServicesController } from './controllers/find-all-services.contr
 import { FindAllServicesUseCase } from '@domain/restaurant/application/use-cases/find-all-services.use-case';
 import { FindServiceByIdUseCase } from '@domain/restaurant/application/use-cases/find-service-by-id.use-case';
 import { FindServiceByIdController } from './controllers/find-service-by-id.controller';
+import { JoinServiceController } from './controllers/join-service.controller';
+import { JoinServiceUseCase } from '@domain/restaurant/application/use-cases/join-service.use-case';
 
 @Module({
   imports: [],
@@ -42,6 +44,7 @@ import { FindServiceByIdController } from './controllers/find-service-by-id.cont
     StartServiceController,
     FindAllServicesController,
     FindServiceByIdController,
+    JoinServiceController,
   ],
   providers: [
     FindAllProductsUseCase,
@@ -57,6 +60,7 @@ import { FindServiceByIdController } from './controllers/find-service-by-id.cont
     StartServiceUseCase,
     FindAllServicesUseCase,
     FindServiceByIdUseCase,
+    JoinServiceUseCase,
   ],
 })
 export class HttpModule {}
