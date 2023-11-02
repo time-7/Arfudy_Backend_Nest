@@ -9,12 +9,12 @@ export class ProductNutritionValidationPipe implements PipeTransform {
     'NutritionFacts deve ser null ou um objeto com todas as propriedades de tabela nutricional exeto totalCalories',
   ];
 
-  private possuiIngredientesOuTabelaNutritional(body: CreateProductRequestDto) {
-    const naoPossuiIngredientes = body.ingredients.length === 0;
-    const nutritionFactsEstaVazio =
+  private hasIngredientsOrNutritionFacts(body: CreateProductRequestDto) {
+    const hasIngredients = body.ingredients.length > 0;
+    const nutritionFactsIsEmpty =
       !body.nutritionFacts || objectIsEmpty(body.nutritionFacts);
 
-    if (naoPossuiIngredientes && nutritionFactsEstaVazio) {
+    if (!hasIngredients && nutritionFactsIsEmpty) {
       return false;
     }
 
@@ -22,7 +22,7 @@ export class ProductNutritionValidationPipe implements PipeTransform {
   }
 
   transform(body: CreateProductRequestDto) {
-    if (!this.possuiIngredientesOuTabelaNutritional(body)) {
+    if (!this.hasIngredientsOrNutritionFacts(body)) {
       throw new BadRequestException(this.messages);
     }
 

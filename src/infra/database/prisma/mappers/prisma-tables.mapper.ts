@@ -1,12 +1,13 @@
 import { Prisma, Table as PrismaTable } from '@prisma/client';
 import { Table } from '@domain/restaurant/enterprise/entities/table';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
+import { UniqueToken } from '../../../../core/entities/unique-token';
 
 export class PrismaTablesMapper {
   static toDomain(raw: PrismaTable): Table {
     return Table.create(
       {
-        activeToken: raw.activeToken,
+        activeToken: UniqueToken.createFromRaw(raw.activeToken),
         seatNum: raw.seatNum,
         tableNum: raw.tableNum,
       },
@@ -16,7 +17,7 @@ export class PrismaTablesMapper {
   static toPrisma(table: Table): Prisma.TableUncheckedCreateInput {
     return {
       id: table.id.toString(),
-      activeToken: table.activeToken,
+      activeToken: table.activeToken.toString(),
       seatNum: table.seatNum,
       tableNum: table.tableNum,
     };
@@ -24,7 +25,7 @@ export class PrismaTablesMapper {
 
   static toPrismaUpdate(table: Table): Prisma.TableUpdateInput {
     return {
-      activeToken: table.activeToken,
+      activeToken: table.activeToken.toString(),
       seatNum: table.seatNum,
       tableNum: table.tableNum,
     };

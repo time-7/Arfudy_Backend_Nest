@@ -6,5 +6,6 @@ export function makeNutritionFacts(override: Partial<NutritionFacts> = {}) {
     carbohydrate: override.carbohydrate ?? faker.number.int() % 20,
     protein: override.protein ?? faker.number.int() % 20,
     totalFat: override.totalFat ?? faker.number.int() % 20,
+    totalCalories: 0,
   });
 }

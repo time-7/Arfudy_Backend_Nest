@@ -37,7 +37,7 @@ export function makeProductWithIngredients(
       has3dModel: false,
       imageUrl: faker.lorem.words(),
       ingredients: override.ingredients ?? [makeIngredient()],
-      nutritionFacts: makeNutritionFacts(override.nutritionFacts),
+      nutritionFacts: null,
       price: faker.number.float(),
       unityModelId: faker.lorem.word(),
     },

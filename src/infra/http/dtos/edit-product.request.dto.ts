@@ -1,11 +1,12 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { CreateProductRequestDto } from './create-product.request.dto';
-import { IsMongoId } from 'class-validator';
+import { IsMongoId, IsOptional } from 'class-validator';
 
 export class EditProductRequestDto extends PartialType(
   CreateProductRequestDto,
 ) {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsMongoId()
+  @IsOptional()
   id: string;
 }

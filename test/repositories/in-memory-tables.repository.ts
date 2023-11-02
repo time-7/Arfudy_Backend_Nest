@@ -13,8 +13,8 @@ export class InMemoryTablesRepository implements TablesRepository {
     this.items[index] = entity;
   }
 
-  findMany(): Promise<Table[]> {
-    throw new Error('Method not implemented.');
+  async findMany(): Promise<Table[]> {
+    return await this.items;
   }
 
   async findById(id: string): Promise<Table | null> {

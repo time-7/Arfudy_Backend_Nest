@@ -10,20 +10,28 @@ import { IngredientPresenter } from './ingredient.presenter';
 export class ProductPresenter {
   @ApiProperty()
   id: string;
+
   @ApiProperty()
   name: string;
+
   @ApiProperty()
   description: string;
+
   @ApiProperty()
   price: number;
+
   @ApiProperty()
   has3dModel: boolean;
+
   @ApiProperty({ type: () => IngredientPresenter, isArray: true })
   ingredients: IngredientPresenter[];
+
   @ApiProperty({ type: () => NutritionFactsPresenter })
   nutritionFacts: NutritionFactsPresenter;
+
   @ApiProperty()
   imageUrl: string;
+
   @ApiProperty()
   unityModelId: string;
 

@@ -4,7 +4,7 @@ import {
 } from '@domain/restaurant/enterprise/entities/table';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
 import { faker } from '@faker-js/faker';
-import { randomUUID } from 'crypto';
+import { UniqueToken } from '@core/entities/unique-token';
 
 export function makeTable(
   override: Partial<TableProps> = {},
@@ -14,7 +14,7 @@ export function makeTable(
     {
       tableNum: faker.number.int() % 10,
       seatNum: faker.number.int() % 5,
-      activeToken: override.activeToken ?? randomUUID(),
+      activeToken: override.activeToken ?? UniqueToken.create(),
     },
     id,
   );
