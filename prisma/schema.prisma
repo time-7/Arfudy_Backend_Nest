@@ -58,3 +58,21 @@ type client {
   isAdmin     Boolean
   clientToken String  @map("client_token")
 }
+
+type product {
+  name     String
+  quantity Int
+}
+
+enum status {
+  PENDING
+  INPREPARE
+  DONE
+}
+
+model Order {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  clientToken String    @map("client_token")
+  products    product[]
+  status      status
+}

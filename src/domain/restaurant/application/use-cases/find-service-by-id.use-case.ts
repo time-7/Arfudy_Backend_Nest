@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Service } from '../../enterprise/entities/service';
 import { ServicesRepository } from '../repositories/services.repository';
 import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
+import { OrdersRepository } from '../repositories/orders.repository';
 
 interface FindServiceByIdUseCaseRequest {
   id: string;
@@ -13,7 +14,10 @@ export type FindServiceByIdUseCaseResponse = {
 
 @Injectable()
 export class FindServiceByIdUseCase {
-  constructor(private readonly servicesRepository: ServicesRepository) {}
+  constructor(
+    private readonly servicesRepository: ServicesRepository,
+    private readonly ordersRepository: OrdersRepository,
+  ) {}
 
   async execute({
     id,

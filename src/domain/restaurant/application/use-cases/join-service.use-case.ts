@@ -25,9 +25,7 @@ export class JoinServiceUseCase {
 
     const newclient = Client.create({ name: client.name, isAdmin: false });
 
-    service.clients.push(newclient);
-
-    await this.servicesRepository.save(service);
+    await this.servicesRepository.addClient(service, newclient);
 
     return { clientToken: newclient.clientToken.toString() };
   }

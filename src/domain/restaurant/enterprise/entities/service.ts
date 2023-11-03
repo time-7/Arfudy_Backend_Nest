@@ -1,7 +1,9 @@
 import { Client } from './value-objects/client';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
-import { Entity } from '@core/entities/entity';
 import { UniqueToken } from '@core/entities/unique-token';
+import { AggregateRoot } from '@core/entities/aggregate-root';
+import { Optional } from '@prisma/client/runtime/library';
+import { Order } from './order';
 
 export type ServiceProps = {
   tableToken: UniqueToken;
@@ -9,9 +11,10 @@ export type ServiceProps = {
   tableId: UniqueEntityId;
   hasEnded: boolean;
   clients: Client[];
+  orders: Order[];
 };
 
-export class Service extends Entity<ServiceProps> {
+export class Service extends AggregateRoot<ServiceProps> {
   get tableId() {
     return this.props.tableId;
   }
@@ -32,12 +35,27 @@ export class Service extends Entity<ServiceProps> {
     return this.props.clients;
   }
 
+  get orders(): Order[] {
+    return this.props.orders;
+  }
+
+  set orders(orders: Order[]) {
+    this.props.orders = orders;
+  }
+
   end(): void {
     this.props.hasEnded = true;
   }
 
   static create(
-    { tableId, tableToken, serviceToken, hasEnded, clients }: ServiceProps,
+    {
+      tableId,
+      tableToken,
+      serviceToken,
+      hasEnded,
+      clients,
+      orders,
+    }: Optional<ServiceProps, 'orders'>,
     id?: UniqueEntityId,
   ) {
     return new Service(
@@ -53,6 +71,7 @@ export class Service extends Entity<ServiceProps> {
             isAdmin: client.isAdmin,
           });
         }),
+        orders: orders ?? [],
       },
       id,
     );

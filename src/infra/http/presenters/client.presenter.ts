@@ -27,4 +27,10 @@ export class ClientPresenter {
       clientToken: client.clientToken,
     });
   }
+
+  static toWs(client: Client) {
+    return {
+      name: client.name,
+    };
+  }
 }

@@ -1,5 +1,6 @@
 import { ServicesRepository } from '@domain/restaurant/application/repositories/services.repository';
 import { Service } from '@domain/restaurant/enterprise/entities/service';
+import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
 
 export class InMemoryServicesRepository implements ServicesRepository {
   items: Service[] = [];
@@ -35,6 +36,14 @@ export class InMemoryServicesRepository implements ServicesRepository {
     );
 
     this.items[index] = entity;
+  }
+
+  async addClient(service: Service, client: Client): Promise<void> {
+    const itemIndex = this.items.findIndex((item) =>
+      item.id.equals(service.id),
+    );
+
+    this.items[itemIndex].clients.push(client);
   }
 
   async delete(entity: Service): Promise<void> {
