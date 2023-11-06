@@ -17,6 +17,30 @@ export class EndServiceUseCase {
   ) {}
 
   async execute({ serviceId, clientToken }: EndServiceUseCaseRequest) {
+    const service = await this.servicesRepository.findById(serviceId);
+
+    if (!service) {
+      throw new ResourceNotFoundError('resoucerNotFound');
+    }
+
+    const admin = service.clients.find((client) => client.isAdmin);
+
+    if (admin.clientToken.toString() !== clientToken) {
+      throw new GivenClientIsNotAdminError('Não autorizado!');
+    }
+
+    const table = await this.tablesRepository.findById(
+      service.tableId.toString(),
+    );
+
+    service.end();
+
+    await this.servicesRepository.save(service);
+
+    table.refreshToken();
+
+    await this.tablesRepository.save(table);
+
     console.log(serviceId, clientToken);
   }
 }
