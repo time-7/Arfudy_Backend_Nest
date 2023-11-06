@@ -7,6 +7,7 @@ import { Socket, io } from 'socket.io-client';
 import { ServicePresenter } from '@infra/http/presenters/services.presenter';
 import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
 import { PrismaClientMapper } from '../mappers/prisma-client.mapper';
+import { ClientPresenter } from '@infra/http/presenters/client.presenter';
 @Injectable()
 export class PrismaServicesRepository implements ServicesRepository {
   private socketClient: Socket;
@@ -57,16 +58,16 @@ export class PrismaServicesRepository implements ServicesRepository {
   }
 
   async addClient(service: Service, client: Client): Promise<void> {
-    const clients = service.clients.map(PrismaClientMapper.toPrisma);
+    const clients = service.clients;
 
-    clients.push(PrismaClientMapper.toPrisma(client));
+    clients.push(client);
 
     await this.prisma.service.update({
       where: { id: service.id.toString() },
-      data: { clients },
+      data: { clients: clients.map(PrismaClientMapper.toPrisma) },
     });
 
-    this.registerNewClientOnService(service);
+    this.registerNewClientOnService(service, client);
   }
 
   async delete(entity: Service): Promise<void> {
@@ -79,9 +80,10 @@ export class PrismaServicesRepository implements ServicesRepository {
     this.socketClient.emit('newService', { data });
   }
 
-  private registerNewClientOnService(entity: Service): void {
+  private registerNewClientOnService(entity: Service, client: Client): void {
     const data = ServicePresenter.toWs(entity);
+    const newClient = ClientPresenter.toWs(client);
 
-    this.socketClient.emit('newClient', { data });
+    this.socketClient.emit('newClient', { data, newClient });
   }
 }

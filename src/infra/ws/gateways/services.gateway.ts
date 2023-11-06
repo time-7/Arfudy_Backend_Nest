@@ -28,10 +28,12 @@ export class ServicesGateway {
   @SubscribeMessage('newClient')
   onNewClient(@MessageBody() body) {
     this.server.emit('onClient', {
-      message: `Um novo cliente juntou-se ao atendimento ${body.data.id}`,
+      message: `${body.newClient.name} juntou-se ao atendimento ${body.data.id}`,
       data: body.data,
     });
 
-    this.logger.log(`Um novo cliente juntouse ao atendimento ${body.data.id}`);
+    this.logger.log(
+      `${body.newClient.name} juntou-se ao atendimento ${body.data.id}`,
+    );
   }
 }

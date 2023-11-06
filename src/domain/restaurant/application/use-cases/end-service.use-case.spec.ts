@@ -3,6 +3,10 @@ import { InMemoryTablesRepository } from '@test/repositories/in-memory-tables.re
 import { EndServiceUseCase } from './end-service.use-case';
 import { makeService } from '@test/factories/make-service';
 import { makeTable } from '@test/factories/make-table';
+import { UniqueToken } from '@core/entities/unique-token';
+import { UniqueEntityId } from '@core/entities/unique-entity-id';
+import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
+import { GivenClientIsNotAdminError } from './errors/client-is-not-admin.error';
 
 describe('End Service Use Case', () => {
   let inMemoryServicesRepository: InMemoryServicesRepository;
@@ -24,8 +28,9 @@ describe('End Service Use Case', () => {
 
     await inMemoryTablesRepository.create(table);
     await inMemoryServicesRepository.create(service);
+
     await sut.execute({
-      id: service.id.toString(),
+      serviceId: service.id.toString(),
       clientToken: service.clients[0].clientToken.toString(),
     });
 
@@ -33,5 +38,29 @@ describe('End Service Use Case', () => {
     expect(inMemoryTablesRepository.items[0].activeToken).not.toEqual(
       service.tableToken,
     );
+  });
+
+  it('should not be able to end a service given token is not from admin', async () => {
+    const table = makeTable();
+    const service = makeService({ tableId: table.id });
+
+    await inMemoryTablesRepository.create(table);
+    await inMemoryServicesRepository.create(service);
+
+    expect(async () => {
+      await sut.execute({
+        serviceId: service.id.toString(),
+        clientToken: UniqueToken.create().toString(),
+      });
+    }).rejects.toBeInstanceOf(GivenClientIsNotAdminError);
+  });
+
+  it('should not be able to end a service that does not exist', async () => {
+    expect(async () => {
+      await sut.execute({
+        serviceId: UniqueEntityId.create().toString(),
+        clientToken: UniqueToken.create().toString(),
+      });
+    }).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

@@ -3,9 +3,8 @@ import {
   ServiceProps,
 } from '@domain/restaurant/enterprise/entities/service';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
-import { faker } from '@faker-js/faker';
-import { UniqueToken } from '../../src/core/entities/unique-token';
-import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
+import { UniqueToken } from '@core/entities/unique-token';
+import { MakeClient } from './make-client';
 
 export const makeService = (
   override: Partial<ServiceProps> = {},
@@ -17,14 +16,8 @@ export const makeService = (
       tableToken: override.tableToken ?? UniqueToken.create(),
       hasEnded: false,
       serviceToken: override.serviceToken ?? UniqueToken.create(),
-      clients: [
-        Client.create({
-          name: faker.person.fullName(),
-          isAdmin: true,
-          clientToken: UniqueToken.create(),
-        }),
-      ],
+      clients: [MakeClient()],
     },
-    id,
+    id ?? UniqueEntityId.create(),
   );
 };
