@@ -51,6 +51,7 @@ model Service {
   hasEnded     Boolean  @default(false) @map("has_ended")
   clients      client[]
   table        Table    @relation(fields: [tableId], references: [id])
+  Order        Order[]
 }
 
 type client {
@@ -75,4 +76,6 @@ model Order {
   clientToken String    @map("client_token")
   products    product[]
   status      status
+  service     Service   @relation(fields: [serviceId], references: [id])
+  serviceId   String    @db.ObjectId
 }

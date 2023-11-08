@@ -4,16 +4,16 @@ import { UniqueToken } from '@core/entities/unique-token';
 import { Product } from './value-objects/products';
 
 export enum Status {
-  PENDING = 'Pending',
-  INPREPARE = 'In Prepare',
-  DONE = 'Done',
+  PENDING = 'PENDING',
+  INPREPARE = 'INPREPARE',
+  DONE = 'DONE',
 }
 
 export type OrderProps = {
   serviceId: UniqueEntityId;
   products: Product[];
   clientToken: UniqueToken;
-  status: Status;
+  status?: Status;
 };
 
 export class Order extends Entity<OrderProps> {
@@ -42,7 +42,7 @@ export class Order extends Entity<OrderProps> {
         products,
         serviceId,
         clientToken,
-        status,
+        status: status ?? Status.PENDING,
       },
       id,
     );

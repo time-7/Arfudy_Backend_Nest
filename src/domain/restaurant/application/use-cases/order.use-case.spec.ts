@@ -1,19 +1,19 @@
 import { InMemoryServicesRepository } from '@test/repositories/in-memory-services.repository';
-import { MakeOrderUseCase } from './make-order.use-case';
+import { OrderUseCase } from './order.use-case';
 import { InMemoryOrdersRepository } from '@test/repositories/in-memory-orders.repository';
-import { makeService } from '../../../../../test/factories/make-service';
-import { makeOrder } from '../../../../../test/factories/make-order';
+import { makeService } from '@test/factories/make-service';
+import { makeOrder } from '@test/factories/make-order';
 
 describe('Make Order', () => {
   let inMemoryServicesRepository: InMemoryServicesRepository;
   let inMemoryOrdersRepository: InMemoryOrdersRepository;
-  let sut: MakeOrderUseCase;
+  let sut: OrderUseCase;
 
   beforeEach(() => {
     inMemoryServicesRepository = new InMemoryServicesRepository();
     inMemoryOrdersRepository = new InMemoryOrdersRepository();
 
-    sut = new MakeOrderUseCase(
+    sut = new OrderUseCase(
       inMemoryServicesRepository,
       inMemoryOrdersRepository,
     );
@@ -34,7 +34,6 @@ describe('Make Order', () => {
       products: order.products,
       clientToken: order.clientToken.toString(),
       serviceId: order.serviceId.toString(),
-      status: order.status,
     });
 
     expect(inMemoryOrdersRepository.items).toHaveLength(1);
