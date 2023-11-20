@@ -11,7 +11,7 @@ export type ServiceProps = {
   tableId: UniqueEntityId;
   hasEnded: boolean;
   clients: Client[];
-  orders: Order[];
+  orders?: Order[];
 };
 
 export class Service extends AggregateRoot<ServiceProps> {

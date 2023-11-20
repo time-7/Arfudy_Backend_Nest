@@ -8,8 +8,17 @@ export class FindAllOrdersController {
 
   @Get()
   async handle() {
-    const { orders } = await this.findAllOrdersUseCase.execute();
+    const { response } = await this.findAllOrdersUseCase.execute();
 
-    return { data: orders.map(OrderPresenter.toHttp) };
+    return {
+      data: response.map((order) =>
+        OrderPresenter.toHttp(
+          order.order,
+          order.client,
+          order.service,
+          order.table,
+        ),
+      ),
+    };
   }
 }

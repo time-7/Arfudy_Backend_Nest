@@ -16,7 +16,7 @@ export class FindAllServicesController {
     const { services } = await this.findAllServicesUseCase.execute();
 
     return {
-      services: services.map(ServicePresenter.toHttp),
+      data: services.map(ServicePresenter.toHttp),
     };
   }
 }

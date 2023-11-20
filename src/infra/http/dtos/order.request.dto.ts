@@ -3,6 +3,8 @@ import { IsNumber, IsString, ValidateNested } from 'class-validator';
 
 class ProductRequestDto {
   @IsString()
+  id: string;
+  @IsString()
   name: string;
   @IsNumber()
   quantity: number;

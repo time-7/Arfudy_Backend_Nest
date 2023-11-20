@@ -12,6 +12,7 @@ export interface ProductProps {
   nutritionFacts?: NutritionFacts;
   price: number;
   unityModelId?: string;
+  isVisible?: boolean;
 }
 
 export class Product extends Entity<ProductProps> {
@@ -79,6 +80,14 @@ export class Product extends Entity<ProductProps> {
     this.props.unityModelId = unityModelId;
   }
 
+  get isVisible(): boolean {
+    return this.props.isVisible;
+  }
+
+  changeVisibility(): void {
+    this.props.isVisible = !this.isVisible;
+  }
+
   static create(
     {
       name,
@@ -89,6 +98,7 @@ export class Product extends Entity<ProductProps> {
       nutritionFacts,
       price,
       unityModelId,
+      isVisible,
     }: ProductProps,
     id?: UniqueEntityId,
   ) {
@@ -108,6 +118,7 @@ export class Product extends Entity<ProductProps> {
             }),
         price,
         unityModelId,
+        isVisible: isVisible ?? true,
       },
       id,
     );

@@ -24,6 +24,7 @@ export class OrderController {
         message: 'Pedido realizado com sucesso!',
       };
     } catch (err) {
+      console.log(err);
       throw new BadRequestException(
         'Não foi possível realizar seu pedido, tente novamente mais tarde.',
       );

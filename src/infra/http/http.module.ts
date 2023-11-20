@@ -35,6 +35,8 @@ import { FindAllOrdersController } from './controllers/find-all-orders.controlle
 import { FindAllOrdersUseCase } from '@domain/restaurant/application/use-cases/find-all-orders.use-case';
 import { FindOrderByIdController } from './controllers/find-order-by-id.controller';
 import { FindOrderByIdUseCase } from '@domain/restaurant/application/use-cases/find-order-by-id.use-case';
+import { ChangeOrdersProductStatusController } from './controllers/change-orders-product-status.controller';
+import { ChangeOrdersProductStatusUseCase } from '@domain/restaurant/application/use-cases/update-orders-product-status.use-case';
 
 @Module({
   imports: [],
@@ -57,6 +59,7 @@ import { FindOrderByIdUseCase } from '@domain/restaurant/application/use-cases/f
     OrderController,
     FindAllOrdersController,
     FindOrderByIdController,
+    ChangeOrdersProductStatusController,
   ],
   providers: [
     FindAllProductsUseCase,
@@ -77,6 +80,7 @@ import { FindOrderByIdUseCase } from '@domain/restaurant/application/use-cases/f
     OrderUseCase,
     FindAllOrdersUseCase,
     FindOrderByIdUseCase,
+    ChangeOrdersProductStatusUseCase,
   ],
 })
 export class HttpModule {}

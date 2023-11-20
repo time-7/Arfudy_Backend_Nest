@@ -10,6 +10,7 @@ import { UniqueEntityId } from '@core/entities/unique-entity-id';
 
 function makeProduct(): Product {
   return Product.create({
+    id: faker.number.hex().toString(),
     name: faker.commerce.productName(),
     quantity: faker.number.int() % 10,
   });

@@ -23,16 +23,16 @@ describe('Make Order', () => {
     const service = makeService();
     await inMemoryServicesRepository.create(service);
 
-    const client = service.clients[0];
+    const token = service.clients[0].clientToken;
 
     const order = makeOrder({
-      clientToken: client.clientToken,
+      clientToken: token,
       serviceId: service.id,
     });
 
     await sut.execute({
       products: order.products,
-      clientToken: order.clientToken.toString(),
+      clientToken: token.toString(),
       serviceId: order.serviceId.toString(),
     });
 

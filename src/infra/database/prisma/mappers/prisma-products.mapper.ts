@@ -35,6 +35,7 @@ export class PrismaProductsMapper {
       price: product.price,
       ingredients: product.ingredients,
       nutritionFacts: product.nutritionFacts,
+      isVisible: product.isVisible,
     };
   }
 }

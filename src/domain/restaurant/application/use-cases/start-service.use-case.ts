@@ -6,6 +6,8 @@ import { StartServiceRequestDto } from '@infra/http/dtos/start-service.request.d
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
 import { UniqueToken } from '@core/entities/unique-token';
 import { Client } from '../../enterprise/entities/value-objects/client';
+import { TablesRepository } from '../repositories/table.repository';
+import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
 
 export interface StartServiceUseCaseRequest extends StartServiceRequestDto {}
 
@@ -15,7 +17,10 @@ export interface StartServiceUseCaseResponse {
 
 @Injectable()
 export class StartServiceUseCase {
-  constructor(private readonly servicesRepository: ServicesRepository) {}
+  constructor(
+    private readonly servicesRepository: ServicesRepository,
+    private readonly tablesRepository: TablesRepository,
+  ) {}
 
   async execute({
     tableToken,
@@ -24,9 +29,18 @@ export class StartServiceUseCase {
     hasEnded,
     client,
   }: StartServiceUseCaseRequest): Promise<StartServiceUseCaseResponse> {
+    const table = await this.tablesRepository.findById(tableId);
+    if (!table) throw new ResourceNotFoundError('Mesa não encontrada!');
+
+    const tokensMatch = table.activeToken.toString() === tableToken;
+
+    if (!tokensMatch)
+      throw new Error(
+        `Token ${tableToken} não corresponde ao token ativo da mesa ${table.tableNum}`,
+      );
+
     const serviceExists =
       await this.servicesRepository.findByTableToken(tableToken);
-
     if (serviceExists)
       throw new TableInUseError(
         'Já existe um atendimento iniciado para o token fornecido',

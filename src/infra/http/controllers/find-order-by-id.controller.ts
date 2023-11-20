@@ -9,8 +9,15 @@ export class FindOrderByIdController {
 
   @Get(':id')
   async handle(@Param('id', MongoIdValidationPipe) id: string) {
-    const { order } = await this.findOrderByIdUseCase.execute({ id });
+    const { response } = await this.findOrderByIdUseCase.execute({ id });
 
-    return { data: OrderPresenter.toHttp(order) };
+    return {
+      data: OrderPresenter.toHttp(
+        response.order,
+        response.client,
+        response.service,
+        response.table,
+      ),
+    };
   }
 }

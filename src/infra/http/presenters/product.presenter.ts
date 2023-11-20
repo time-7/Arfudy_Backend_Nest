@@ -35,6 +35,9 @@ export class ProductPresenter {
   @ApiProperty()
   unityModelId: string;
 
+  @ApiProperty()
+  isVisible: boolean;
+
   private constructor(
     {
       name,
@@ -45,6 +48,7 @@ export class ProductPresenter {
       nutritionFacts,
       imageUrl,
       unityModelId,
+      isVisible,
     }: Optional<ProductProps>,
     id: string,
   ) {
@@ -57,6 +61,7 @@ export class ProductPresenter {
     this.nutritionFacts = nutritionFacts;
     this.imageUrl = imageUrl;
     this.unityModelId = unityModelId;
+    this.isVisible = isVisible ?? true;
   }
 
   static toHttp(product: Product) {
@@ -70,6 +75,7 @@ export class ProductPresenter {
         has3dModel: product.has3dModel,
         imageUrl: product.imageUrl,
         unityModelId: product.unityModelId,
+        isVisible: product.isVisible,
       },
       product.id.toString(),
     );

@@ -9,14 +9,19 @@ export class PrismaOrdersRepository implements OrdersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string): Promise<Order> {
-    const order = await this.prisma.order.findFirst({ where: { id } });
+    const order = await this.prisma.order.findFirst({
+      where: { id },
+      include: { service: { include: { table: true } } },
+    });
     if (!order) return null;
 
     return PrismaOrderMapper.toDomain(order);
   }
 
   async findMany(): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany();
+    const orders = await this.prisma.order.findMany({
+      include: { service: { include: { table: true } } },
+    });
 
     return orders.map(PrismaOrderMapper.toDomain);
   }
@@ -30,10 +35,15 @@ export class PrismaOrdersRepository implements OrdersRepository {
   async findManyByServiceId(serviceId: string): Promise<Order[]> {
     const orders = await this.prisma.order.findMany({ where: { serviceId } });
 
-    return orders.map(PrismaOrderMapper.toDomain);
+    return orders.map((order) => PrismaOrderMapper.toDomain(order));
   }
 
   async save(order: Order): Promise<void> {
-    throw new Error('Method not implemented!');
+    const data = PrismaOrderMapper.toPrismaUpdate(order);
+
+    await this.prisma.order.update({
+      where: { id: order.id.toString() },
+      data,
+    });
   }
 }

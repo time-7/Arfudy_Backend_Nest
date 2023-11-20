@@ -1,56 +1,54 @@
-import { Order, Status } from '@domain/restaurant/enterprise/entities/order';
+import { Order } from '@domain/restaurant/enterprise/entities/order';
+import { Service } from '@domain/restaurant/enterprise/entities/service';
+import { Table } from '@domain/restaurant/enterprise/entities/table';
+import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
 import { Product } from '@domain/restaurant/enterprise/entities/value-objects/products';
 
 class ProductPresenter {
+  id: string;
   name: string;
   quantity: number;
+  status: string;
 
   static toHttp(product: Product): ProductPresenter {
     return {
+      id: product.id,
       name: product.name,
       quantity: product.quantity,
+      status: product.status,
     };
   }
-}
-
-function statusPresenter(status: Status): string {
-  let response: string;
-
-  if (status === 'PENDING') response = 'Pending';
-  else if (status === 'INPREPARE') response = 'In Prepare';
-  else response = 'DONE';
-
-  return response;
 }
 
 export class OrderPresenter {
   id: string;
   serviceId: string;
-  products: ProductPresenter[];
-  clientToken: string;
-  status?: string;
+  product: ProductPresenter;
+  clientName: string;
+  tableNum: number;
 
-  private constructor({
-    id,
-    serviceId,
-    products,
-    clientToken,
-    status,
-  }: OrderPresenter) {
+  private constructor({ id, serviceId, product, clientName }: OrderPresenter) {
     this.id = id;
     this.serviceId = serviceId;
-    this.products = products;
-    this.clientToken = clientToken;
-    this.status = status;
+    this.product = product;
+    this.clientName = clientName;
   }
 
-  static toHttp({ clientToken, id, products, serviceId, status }: Order) {
-    return new OrderPresenter({
-      id: id.toString(),
-      clientToken: clientToken.toString(),
-      products: products.map(ProductPresenter.toHttp),
-      serviceId: serviceId.toString(),
-      status: statusPresenter(status),
-    });
+  static toHttp(
+    order: Order,
+    client?: Client,
+    service?: Service,
+    table?: Table,
+  ) {
+    return order.products.map(
+      (product) =>
+        new OrderPresenter({
+          id: order.id.toString(),
+          clientName: client.name,
+          product: ProductPresenter.toHttp(product),
+          serviceId: service.id.toString(),
+          tableNum: table.tableNum,
+        }),
+    );
   }
 }
