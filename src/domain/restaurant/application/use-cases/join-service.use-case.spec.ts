@@ -2,15 +2,21 @@ import { InMemoryServicesRepository } from '@test/repositories/in-memory-service
 import { JoinServiceUseCase } from './join-service.use-case';
 import { makeService } from '@test/factories/make-service';
 import { MakeClient } from '@test/factories/make-client';
+import { InMemoryServicesGateway } from '@test/gateways/in-memory-services.gateway';
 
 describe('Join Service', () => {
   let inMemoryServicesRepository: InMemoryServicesRepository;
+  const inMemoryServicesGateway = new InMemoryServicesGateway();
+
   let sut: JoinServiceUseCase;
 
   beforeEach(() => {
     inMemoryServicesRepository = new InMemoryServicesRepository();
 
-    sut = new JoinServiceUseCase(inMemoryServicesRepository);
+    sut = new JoinServiceUseCase(
+      inMemoryServicesRepository,
+      inMemoryServicesGateway,
+    );
   });
 
   it('should be able to add a client to an ongoing service', async () => {

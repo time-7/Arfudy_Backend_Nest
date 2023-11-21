@@ -14,11 +14,20 @@ export class InMemoryTablesRepository implements TablesRepository {
   }
 
   async findMany(): Promise<Table[]> {
-    return await this.items;
+    return this.items;
   }
 
   async findById(id: string): Promise<Table | null> {
     const table = this.items.find((item) => item.id.toString() === id);
+    if (!table) return null;
+
+    return table;
+  }
+
+  async findByToken(activeToken: string): Promise<Table> {
+    const table = this.items.find(
+      (item) => item.activeToken.toString() === activeToken,
+    );
     if (!table) return null;
 
     return table;

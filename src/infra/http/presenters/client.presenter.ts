@@ -1,8 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Client,
-  ClientProps,
-} from '@domain/restaurant/enterprise/entities/value-objects/client';
+import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
 
 export class ClientPresenter {
   @ApiProperty()
@@ -14,7 +11,11 @@ export class ClientPresenter {
   @ApiProperty()
   clientToken: string;
 
-  private constructor({ name, isAdmin, clientToken }: Partial<ClientProps>) {
+  private constructor({
+    name,
+    isAdmin,
+    clientToken,
+  }: Partial<ClientPresenter>) {
     this.name = name;
     this.isAdmin = isAdmin;
     this.clientToken = clientToken.toString();
@@ -24,7 +25,7 @@ export class ClientPresenter {
     return new ClientPresenter({
       name: client.name,
       isAdmin: client.isAdmin,
-      clientToken: client.clientToken,
+      clientToken: client.clientToken.toString(),
     });
   }
 

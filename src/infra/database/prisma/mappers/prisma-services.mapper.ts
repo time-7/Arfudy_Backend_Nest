@@ -38,7 +38,7 @@ export class PrismaServicesMapper {
     };
   }
 
-  static toDomain(raw: PrismaService) {
+  static toDomain(raw: PrismaService): Service {
     return Service.create(
       {
         tableId: UniqueEntityId.createFromRawId(raw.tableId),

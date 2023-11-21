@@ -8,7 +8,6 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { objectIsEmpty } from '@core/helpers/object-is-empty';
 
 class NutritionFactsDto {
   @IsInt()
@@ -60,9 +59,7 @@ export class CreateProductRequestDto {
 
   @IsOptional()
   @ValidateNested()
-  @Type((body) =>
-    objectIsEmpty(body.object.nutritionFacts) ? Object : NutritionFactsDto,
-  )
+  @Type((body) => (body.object.nutritionFacts ? Object : NutritionFactsDto))
   @ApiPropertyOptional({ type: NutritionFactsDto })
   nutritionFacts?: NutritionFactsDto;
 

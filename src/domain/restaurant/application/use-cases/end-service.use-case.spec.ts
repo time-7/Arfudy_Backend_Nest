@@ -7,18 +7,23 @@ import { UniqueToken } from '@core/entities/unique-token';
 import { UniqueEntityId } from '@core/entities/unique-entity-id';
 import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
 import { GivenClientIsNotAdminError } from './errors/client-is-not-admin.error';
+import { InMemoryOrdersRepository } from '@test/repositories/in-memory-orders.repository';
 
 describe('End Service Use Case', () => {
   let inMemoryServicesRepository: InMemoryServicesRepository;
   let inMemoryTablesRepository: InMemoryTablesRepository;
+  let inMemoryOrdersRepository: InMemoryOrdersRepository;
   let sut: EndServiceUseCase;
 
   beforeEach(() => {
     inMemoryServicesRepository = new InMemoryServicesRepository();
     inMemoryTablesRepository = new InMemoryTablesRepository();
+    inMemoryOrdersRepository = new InMemoryOrdersRepository();
+
     sut = new EndServiceUseCase(
       inMemoryServicesRepository,
       inMemoryTablesRepository,
+      inMemoryOrdersRepository,
     );
   });
 

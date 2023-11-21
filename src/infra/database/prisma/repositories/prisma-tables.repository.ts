@@ -27,6 +27,13 @@ export class PrismaTablesRepository implements TablesRepository {
     return PrismaTablesMapper.toDomain(table);
   }
 
+  async findByToken(activeToken: string): Promise<Table> {
+    const table = await this.prisma.table.findFirst({ where: { activeToken } });
+    if (!table) return null;
+
+    return PrismaTablesMapper.toDomain(table);
+  }
+
   async save(entity: Table): Promise<void> {
     const data = PrismaTablesMapper.toPrismaUpdate(entity);
 

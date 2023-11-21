@@ -6,6 +6,8 @@ import { TablesRepository } from '../../domain/restaurant/application/repositori
 import { PrismaTablesRepository } from './prisma/repositories/prisma-tables.repository';
 import { ServicesRepository } from '../../domain/restaurant/application/repositories/services.repository';
 import { PrismaServicesRepository } from './prisma/repositories/prisma-services.repository';
+import { OrdersRepository } from '@domain/restaurant/application/repositories/orders.repository';
+import { PrismaOrdersRepository } from './prisma/repositories/prisma-orders.repository';
 
 @Global()
 @Module({
@@ -23,12 +25,17 @@ import { PrismaServicesRepository } from './prisma/repositories/prisma-services.
       provide: ServicesRepository,
       useClass: PrismaServicesRepository,
     },
+    {
+      provide: OrdersRepository,
+      useClass: PrismaOrdersRepository,
+    },
   ],
   exports: [
     PrismaService,
     ProductsRepository,
     TablesRepository,
     ServicesRepository,
+    OrdersRepository,
   ],
 })
 export class DatabaseModule {}

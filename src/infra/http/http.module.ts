@@ -29,6 +29,16 @@ import { JoinServiceController } from './controllers/join-service.controller';
 import { JoinServiceUseCase } from '@domain/restaurant/application/use-cases/join-service.use-case';
 import { EndServiceController } from './controllers/end-service.controlelr';
 import { EndServiceUseCase } from '@domain/restaurant/application/use-cases/end-service.use-case';
+import { OrderController } from './controllers/order.controller';
+import { OrderUseCase } from '@domain/restaurant/application/use-cases/order.use-case';
+import { FindAllOrdersController } from './controllers/find-all-orders.controller';
+import { FindAllOrdersUseCase } from '@domain/restaurant/application/use-cases/find-all-orders.use-case';
+import { FindOrderByIdController } from './controllers/find-order-by-id.controller';
+import { FindOrderByIdUseCase } from '@domain/restaurant/application/use-cases/find-order-by-id.use-case';
+import { ChangeOrdersProductStatusController } from './controllers/change-orders-product-status.controller';
+import { ChangeOrdersProductStatusUseCase } from '@domain/restaurant/application/use-cases/update-orders-product-status.use-case';
+import { FindAllOrdersByTableIdController } from './controllers/find-all-orders-by-table-id.controller';
+import { FindAllOrdersByTableIdUseCase } from '@domain/restaurant/application/use-cases/find-all-orders-by-table-id.use-case';
 
 @Module({
   imports: [],
@@ -48,6 +58,11 @@ import { EndServiceUseCase } from '@domain/restaurant/application/use-cases/end-
     FindServiceByIdController,
     JoinServiceController,
     EndServiceController,
+    OrderController,
+    FindAllOrdersController,
+    FindOrderByIdController,
+    ChangeOrdersProductStatusController,
+    FindAllOrdersByTableIdController,
   ],
   providers: [
     FindAllProductsUseCase,
@@ -65,6 +80,11 @@ import { EndServiceUseCase } from '@domain/restaurant/application/use-cases/end-
     FindServiceByIdUseCase,
     JoinServiceUseCase,
     EndServiceUseCase,
+    OrderUseCase,
+    FindAllOrdersUseCase,
+    FindOrderByIdUseCase,
+    ChangeOrdersProductStatusUseCase,
+    FindAllOrdersByTableIdUseCase,
   ],
 })
 export class HttpModule {}

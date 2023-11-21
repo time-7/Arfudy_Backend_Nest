@@ -3,17 +3,10 @@ import { UniqueEntityId } from '@core/entities/unique-entity-id';
 import { UniqueToken } from '@core/entities/unique-token';
 import { Product } from './value-objects/products';
 
-export enum Status {
-  PENDING = 'Pending',
-  INPREPARE = 'In Prepare',
-  DONE = 'Done',
-}
-
 export type OrderProps = {
-  serviceId: UniqueEntityId;
+  serviceId?: UniqueEntityId;
   products: Product[];
-  clientToken: UniqueToken;
-  status: Status;
+  clientToken?: UniqueToken;
 };
 
 export class Order extends Entity<OrderProps> {
@@ -29,20 +22,15 @@ export class Order extends Entity<OrderProps> {
     return this.props.products;
   }
 
-  get status(): Status {
-    return this.props.status;
-  }
-
   static create(
-    { products, serviceId, clientToken, status }: OrderProps,
+    { products, serviceId, clientToken }: OrderProps,
     id?: UniqueEntityId,
   ) {
     return new Order(
       {
         products,
-        serviceId,
-        clientToken,
-        status,
+        serviceId: serviceId,
+        clientToken: clientToken,
       },
       id,
     );
