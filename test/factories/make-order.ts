@@ -1,7 +1,6 @@
 import {
   Order,
   OrderProps,
-  Status,
 } from '@domain/restaurant/enterprise/entities/order';
 import { Product } from '@domain/restaurant/enterprise/entities/value-objects/products';
 import { faker } from '@faker-js/faker';
@@ -21,6 +20,5 @@ export function makeOrder(override: Partial<OrderProps> = {}): Order {
     products: [makeProduct()],
     clientToken: override.clientToken ?? UniqueToken.create(),
     serviceId: override.serviceId ?? UniqueEntityId.create(),
-    status: Status.PENDING,
   });
 }

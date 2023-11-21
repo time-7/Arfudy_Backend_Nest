@@ -8,6 +8,7 @@ import { UniqueToken } from '@core/entities/unique-token';
 import { Client } from '../../enterprise/entities/value-objects/client';
 import { TablesRepository } from '../repositories/table.repository';
 import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.error';
+import { ServicesGateway } from '../gateways/services.gateway';
 
 export interface StartServiceUseCaseRequest extends StartServiceRequestDto {}
 
@@ -20,6 +21,7 @@ export class StartServiceUseCase {
   constructor(
     private readonly servicesRepository: ServicesRepository,
     private readonly tablesRepository: TablesRepository,
+    private readonly servicesGateway: ServicesGateway,
   ) {}
 
   async execute({
@@ -56,6 +58,8 @@ export class StartServiceUseCase {
     });
 
     await this.servicesRepository.create(service);
+
+    this.servicesGateway.registerNewService(service);
 
     return { service };
   }

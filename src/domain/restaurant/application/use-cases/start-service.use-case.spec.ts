@@ -3,10 +3,12 @@ import { StartServiceUseCase } from './start-service.use-case';
 import { makeService } from '@test/factories/make-service';
 import { InMemoryTablesRepository } from '@test/repositories/in-memory-tables.repository';
 import { makeTable } from '@test/factories/make-table';
+import { InMemoryServicesGateway } from '@test/gateways/in-memory-services.gateway';
 
 describe('Create Service', () => {
   let inMemoryServicesRepository: InMemoryServicesRepository;
   let inMemoryTablesRepository: InMemoryTablesRepository;
+  const inMemoryServicesGateway = new InMemoryServicesGateway();
 
   let sut: StartServiceUseCase;
 
@@ -17,6 +19,7 @@ describe('Create Service', () => {
     sut = new StartServiceUseCase(
       inMemoryServicesRepository,
       inMemoryTablesRepository,
+      inMemoryServicesGateway,
     );
   });
 

@@ -27,19 +27,21 @@ export class OrderPresenter {
   clientName: string;
   tableNum: number;
 
-  private constructor({ id, serviceId, product, clientName }: OrderPresenter) {
+  private constructor({
+    id,
+    serviceId,
+    product,
+    clientName,
+    tableNum,
+  }: OrderPresenter) {
     this.id = id;
     this.serviceId = serviceId;
     this.product = product;
     this.clientName = clientName;
+    this.tableNum = tableNum;
   }
 
-  static toHttp(
-    order: Order,
-    client?: Client,
-    service?: Service,
-    table?: Table,
-  ) {
+  static toHttp(order: Order, client: Client, service: Service, table: Table) {
     return order.products.map(
       (product) =>
         new OrderPresenter({

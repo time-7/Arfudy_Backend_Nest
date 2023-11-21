@@ -3,27 +3,17 @@ import { Service } from '@domain/restaurant/enterprise/entities/service';
 import { PrismaServicesMapper } from '../mappers/prisma-services.mapper';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
-import { Socket, io } from 'socket.io-client';
-import { ServicePresenter } from '@infra/http/presenters/services.presenter';
 import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
 import { PrismaClientMapper } from '../mappers/prisma-client.mapper';
-import { ClientPresenter } from '@infra/http/presenters/client.presenter';
+
 @Injectable()
 export class PrismaServicesRepository implements ServicesRepository {
-  private socketClient: Socket;
-
-  constructor(private readonly prisma: PrismaService) {
-    this.socketClient = io(`http://localhost:${process.env.PORT}`, {
-      transports: ['websocket'],
-    });
-  }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(entity: Service): Promise<void> {
     const data = PrismaServicesMapper.toPrisma(entity);
 
     await this.prisma.service.create({ data });
-
-    this.registerNewService(entity);
   }
 
   async findMany(): Promise<Service[]> {
@@ -66,24 +56,9 @@ export class PrismaServicesRepository implements ServicesRepository {
       where: { id: service.id.toString() },
       data: { clients: clients.map(PrismaClientMapper.toPrisma) },
     });
-
-    this.registerNewClientOnService(service, client);
   }
 
   async delete(entity: Service): Promise<void> {
     await this.prisma.service.delete({ where: { id: entity.id.toString() } });
-  }
-
-  private registerNewService(service: Service): void {
-    const data = ServicePresenter.toWs(service);
-
-    this.socketClient.emit('newService', { data });
-  }
-
-  private registerNewClientOnService(entity: Service, client: Client): void {
-    const data = ServicePresenter.toWs(entity);
-    const newClient = ClientPresenter.toWs(client);
-
-    this.socketClient.emit('newClient', { data, newClient });
   }
 }
