@@ -17,11 +17,17 @@ export class JoinServiceController {
     @Param('tableToken') tableToken: string,
     @Body() data: JoinServiceUseCaseRequest,
   ) {
-    const { clientToken } = await this.joinServiceUseCase.execute({
+    const { clientToken, service } = await this.joinServiceUseCase.execute({
       tableToken,
       ...data,
     });
 
-    return { data: { clientToken } };
+    return {
+      data: {
+        serviceId: service.id.toString(),
+        serviceToken: service.serviceToken.toString(),
+        clientToken,
+      },
+    };
   }
 }

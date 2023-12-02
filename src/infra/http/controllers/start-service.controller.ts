@@ -16,10 +16,12 @@ export class StartServiceController {
 
     return {
       data: {
+        id: service.id.toString(),
+        token: service.serviceToken.toString(),
         clients: service.clients.map((client) => {
           return {
             name: client.name,
-            clientToken: client.clientToken,
+            clientToken: client.clientToken.toString(),
             isAdmin: client.isAdmin,
           };
         }),

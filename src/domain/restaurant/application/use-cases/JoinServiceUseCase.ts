@@ -3,17 +3,10 @@ import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found.er
 import { ServicesRepository } from '../repositories/services.repository';
 import { Client } from '@domain/restaurant/enterprise/entities/value-objects/client';
 import { ServicesGateway } from '../gateways/services.gateway';
-import { Service } from '@domain/restaurant/enterprise/entities/service';
-
-export interface JoinServiceUseCaseRequest {
-  tableToken: string;
-  client: { name: string };
-}
-
-export interface JoinServiceUseCaseResponse {
-  service: Service;
-  clientToken: string;
-}
+import {
+  JoinServiceUseCaseRequest,
+  JoinServiceUseCaseResponse,
+} from './join-service.use-case';
 
 @Injectable()
 export class JoinServiceUseCase {
