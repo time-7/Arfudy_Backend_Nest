@@ -49,7 +49,25 @@ Produção:
 npm run start:prod
 
 ```
-  
+
+## Como rodar o projeto localmente usando docker
+
+Adicione as váriaveis de ambiente em um arquivo .env e rode o comando:
+
+``` bash
+
+docker-compose up
+
+```
+
+## Endpoints:
+Os endpoints do projeto podem ser acessados através do seguinte endereço após rodar o projeto:
+
+``` bash
+
+http://localhost:3333/api/doc
+
+```
 
 ## Testes
 não esquecer de adicionar ambas as strings de conexão, assim como o example.env

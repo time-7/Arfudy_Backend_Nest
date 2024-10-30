@@ -6,6 +6,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResourceNotFoundFilter } from './filters/resource-not-found.filter';
 import { PrismaExceptionFilter } from './filters/prisma-exception.filter';
 import { TableInUseFilter } from './filters/table-in-use.filter';
+import { config } from 'dotenv';
+
+config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
