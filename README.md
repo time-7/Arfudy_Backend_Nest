@@ -93,9 +93,13 @@ npm run test:e2e
 abrir o terminal no diretório do projeto e rodar os seguintes comandos:
 
 ```bash
-docker build -t stvnreis/arfudy:latest .
+docker login
+docker build -t arfudy/arfudy:latest .
+docker push arfudy/arfudy:latest
 ```
-
+ou 
 ```bash
-docker push stvnreis/arfudy:latest
+docker login
+docker-compose build
+docker-compose push
 ```
