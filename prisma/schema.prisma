@@ -67,12 +67,19 @@ type product {
   name     String
   quantity Int
   status   status
+  category category?
 }
 
 enum status {
   PENDING
   IN_PREPARE
   DONE
+  DELIVERED
+}
+
+enum category {
+  DRINK
+  FOOD
 }
 
 model Order {
