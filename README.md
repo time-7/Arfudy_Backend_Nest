@@ -56,7 +56,7 @@ Adicione as váriaveis de ambiente em um arquivo .env e rode o comando:
 
 ``` bash
 
-docker-compose up
+docker-compose up --build
 
 ```
 
@@ -94,12 +94,6 @@ abrir o terminal no diretório do projeto e rodar os seguintes comandos:
 
 ```bash
 docker login
-docker build -t arfudy/arfudy:latest .
-docker push arfudy/arfudy:latest
-```
-ou 
-```bash
-docker login
-docker-compose build
-docker-compose push
+docker build -t arfudy/arfudy-backend:latest .
+docker push arfudy/arfudy-backend:latest
 ```
