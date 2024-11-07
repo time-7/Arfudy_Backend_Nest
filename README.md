@@ -56,7 +56,7 @@ Adicione as váriaveis de ambiente em um arquivo .env e rode o comando:
 
 ``` bash
 
-docker-compose up
+docker-compose up --build
 
 ```
 
@@ -93,9 +93,7 @@ npm run test:e2e
 abrir o terminal no diretório do projeto e rodar os seguintes comandos:
 
 ```bash
-docker build -t stvnreis/arfudy:latest .
-```
-
-```bash
-docker push stvnreis/arfudy:latest
+docker login
+docker build -t arfudy/arfudy-backend:latest .
+docker push arfudy/arfudy-backend:latest
 ```
