@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsNumber, IsString, ValidateNested, IsEnum } from 'class-validator';
+import { Category } from '@domain/restaurant/enterprise/entities/value-objects/products';
 
 class ProductRequestDto {
   @IsString()
@@ -8,6 +9,8 @@ class ProductRequestDto {
   name: string;
   @IsNumber()
   quantity: number;
+  @IsEnum(Category)
+  category: Category;
 }
 
 export class OrderRequestDto {

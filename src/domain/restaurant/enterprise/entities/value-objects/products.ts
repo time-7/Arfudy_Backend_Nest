@@ -17,7 +17,7 @@ export type ProductProps = {
   name: string;
   quantity: number;
   status?: Status;
-  category?: Category;
+  category: Category;
 };
 
 export class Product extends ValueObject<ProductProps> {
