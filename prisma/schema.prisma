@@ -67,7 +67,7 @@ type product {
   name     String
   quantity Int
   status   status
-  category category?
+  category category
 }
 
 enum status {
