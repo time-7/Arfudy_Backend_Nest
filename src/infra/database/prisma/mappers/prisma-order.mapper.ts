@@ -2,6 +2,7 @@ import { UniqueEntityId } from '@core/entities/unique-entity-id';
 import { UniqueToken } from '@core/entities/unique-token';
 import { Order } from '@domain/restaurant/enterprise/entities/order';
 import {
+  Category,
   Product,
   Status,
 } from '@domain/restaurant/enterprise/entities/value-objects/products';
@@ -12,6 +13,7 @@ type PrismaOrderProduct = {
   name: string;
   quantity: number;
   status: Status;
+  category: Category;
 };
 
 export class PrismaOrderMapper {
@@ -24,6 +26,7 @@ export class PrismaOrderMapper {
           name: item.name,
           quantity: item.quantity,
           status: item.status,
+          category: item.category,
         };
 
         return data;
@@ -41,6 +44,7 @@ export class PrismaOrderMapper {
           name: item.name,
           quantity: item.quantity,
           status: item.status,
+          category: item.category,
         };
 
         return data;
@@ -56,7 +60,11 @@ export class PrismaOrderMapper {
         serviceId: UniqueEntityId.createFromRawId(raw.serviceId),
         clientToken: UniqueToken.createFromRaw(raw.clientToken),
         products: raw.products.map((item) =>
-          Product.create({ ...item, status: item.status as Status }),
+          Product.create({
+            ...item,
+            status: item.status as Status,
+            category: item.category as Category,
+          }),
         ),
       },
       UniqueEntityId.createFromRawId(raw.id),

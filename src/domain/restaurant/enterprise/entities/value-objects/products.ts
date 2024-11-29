@@ -4,6 +4,12 @@ export enum Status {
   PENDING = 'PENDING',
   IN_PREPARE = 'IN_PREPARE',
   DONE = 'DONE',
+  DELIVERED = 'DELIVERED',
+}
+
+export enum Category {
+  DRINK = 'DRINK',
+  FOOD = 'FOOD',
 }
 
 export type ProductProps = {
@@ -11,6 +17,7 @@ export type ProductProps = {
   name: string;
   quantity: number;
   status?: Status;
+  category: Category;
 };
 
 export class Product extends ValueObject<ProductProps> {
@@ -34,12 +41,23 @@ export class Product extends ValueObject<ProductProps> {
     this.props.status = status;
   }
 
-  static create({ id, name, quantity, status }: ProductProps): Product {
+  get category(): Category {
+    return this.props.category;
+  }
+
+  static create({
+    id,
+    name,
+    quantity,
+    status,
+    category,
+  }: ProductProps): Product {
     return new Product({
       id,
       name,
       quantity,
       status: status ?? Status.PENDING,
+      category,
     });
   }
 }

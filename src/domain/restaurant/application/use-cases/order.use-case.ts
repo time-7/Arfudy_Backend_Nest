@@ -43,6 +43,7 @@ export class OrderUseCase {
           id: product.id,
           name: product.name,
           quantity: product.quantity,
+          category: product.category,
         }),
       ),
       serviceId: UniqueEntityId.createFromRawId(serviceId),
