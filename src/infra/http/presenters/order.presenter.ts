@@ -10,6 +10,7 @@ class ProductPresenter {
   quantity: number;
   status: string;
   category: string;
+  date: Date;
 
   static toHttp(product: Product): ProductPresenter {
     return {
@@ -18,6 +19,7 @@ class ProductPresenter {
       quantity: product.quantity,
       status: product.status,
       category: product.category,
+      date: product.date,
     };
   }
 }

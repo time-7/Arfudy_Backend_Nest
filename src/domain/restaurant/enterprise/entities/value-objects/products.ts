@@ -18,6 +18,7 @@ export type ProductProps = {
   quantity: number;
   status?: Status;
   category: Category;
+  date: Date;
 };
 
 export class Product extends ValueObject<ProductProps> {
@@ -45,12 +46,17 @@ export class Product extends ValueObject<ProductProps> {
     return this.props.category;
   }
 
+  get date(): Date {
+    return this.props.date;
+  }
+
   static create({
     id,
     name,
     quantity,
     status,
     category,
+    date,
   }: ProductProps): Product {
     return new Product({
       id,
@@ -58,6 +64,7 @@ export class Product extends ValueObject<ProductProps> {
       quantity,
       status: status ?? Status.PENDING,
       category,
+      date: date ?? new Date(),
     });
   }
 }

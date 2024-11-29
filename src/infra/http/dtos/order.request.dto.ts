@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsString, ValidateNested, IsEnum } from 'class-validator';
+import {
+  IsNumber,
+  IsString,
+  ValidateNested,
+  IsEnum,
+  IsDate,
+} from 'class-validator';
 import { Category } from '@domain/restaurant/enterprise/entities/value-objects/products';
 
 class ProductRequestDto {
@@ -11,6 +17,9 @@ class ProductRequestDto {
   quantity: number;
   @IsEnum(Category)
   category: Category;
+  @IsDate()
+  @Type(() => Date)
+  date: Date;
 }
 
 export class OrderRequestDto {

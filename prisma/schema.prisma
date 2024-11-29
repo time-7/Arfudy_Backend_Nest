@@ -68,6 +68,7 @@ type product {
   quantity Int
   status   status
   category category
+  date DateTime
 }
 
 enum status {
