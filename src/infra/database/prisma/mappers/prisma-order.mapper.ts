@@ -14,6 +14,7 @@ type PrismaOrderProduct = {
   quantity: number;
   status: Status;
   category: Category;
+  date: Date;
 };
 
 export class PrismaOrderMapper {
@@ -27,6 +28,7 @@ export class PrismaOrderMapper {
           quantity: item.quantity,
           status: item.status,
           category: item.category,
+          date: item.date,
         };
 
         return data;
@@ -45,6 +47,7 @@ export class PrismaOrderMapper {
           quantity: item.quantity,
           status: item.status,
           category: item.category,
+          date: item.date,
         };
 
         return data;
@@ -64,6 +67,7 @@ export class PrismaOrderMapper {
             ...item,
             status: item.status as Status,
             category: item.category as Category,
+            date: item.date,
           }),
         ),
       },
